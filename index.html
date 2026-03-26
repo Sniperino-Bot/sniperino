@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sniperino — Telegram-gesteuerter Pump.fun Sniper Bot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* ── Reset & Base ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #080810;
+      color: #c8d4e8;
+      font-family: "Courier New", Courier, monospace;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── Grid-Hintergrund ──────────────────────────────────────── */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(0,204,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,204,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* ── Neon-Farben ───────────────────────────────────────────── */
+    .nc { color: #00ccff; text-shadow: 0 0 8px #00ccffaa, 0 0 24px #00ccff44; }
+    .nm { color: #ff3355; text-shadow: 0 0 8px #ff3355aa, 0 0 24px #ff335544; }
+    .nl { color: #00ee77; text-shadow: 0 0 8px #00ee77aa, 0 0 24px #00ee7744; }
+    .nt { color: #ffaa00; text-shadow: 0 0 8px #ffaa00aa, 0 0 24px #ffaa0044; }
+
+    /* ── Rahmen mit Glow ───────────────────────────────────────── */
+    .gc { border: 1px solid #00ccff33; box-shadow: 0 0 18px #00ccff1a, inset 0 0 14px #00ccff08; }
+    .gm { border: 1px solid #ff335533; box-shadow: 0 0 18px #ff33551a, inset 0 0 14px #ff335508; }
+    .gl { border: 1px solid #00ee7733; box-shadow: 0 0 18px #00ee771a, inset 0 0 14px #00ee7708; }
+    .gt { border: 1px solid #ffaa0033; box-shadow: 0 0 18px #ffaa001a, inset 0 0 14px #ffaa0008; }
+
+    /* ── Gradient-Text ─────────────────────────────────────────── */
+    .grad {
+      background: linear-gradient(100deg, #00ccff 0%, #ff3355 50%, #00ee77 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grad-cm {
+      background: linear-gradient(90deg, #00ccff, #ff3355);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Scanlines ─────────────────────────────────────────────── */
+    .scanlines::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.12) 3px, rgba(0,0,0,0.12) 4px
+      );
+    }
+
+    /* ── Buttons ───────────────────────────────────────────────── */
+    .btn-c {
+      display: inline-block;
+      background: linear-gradient(135deg, #00ccff18, #ff335512);
+      border: 1px solid #00ccff;
+      color: #00ccff;
+      text-shadow: 0 0 8px #00ccffbb;
+      box-shadow: 0 0 20px #00ccff33;
+      transition: all .25s;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-c:hover {
+      background: linear-gradient(135deg, #00ccff2a, #ff33551a);
+      box-shadow: 0 0 38px #00ccff77, 0 0 70px #00ccff22;
+      transform: translateY(-2px);
+    }
+    .btn-t {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffaa0018, #ff335512);
+      border: 1px solid #ffaa00;
+      color: #ffaa00;
+      text-shadow: 0 0 8px #ffaa00bb;
+      box-shadow: 0 0 20px #ffaa0033;
+      transition: all .25s;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-t:hover {
+      background: linear-gradient(135deg, #ffaa002a, #ff33551a);
+      box-shadow: 0 0 38px #ffaa0077;
+      transform: translateY(-2px);
+    }
+    .btn-m {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid #ff3355;
+      color: #ff3355;
+      text-shadow: 0 0 8px #ff3355bb;
+      box-shadow: 0 0 16px #ff335522;
+      transition: all .25s;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-m:hover {
+      background: #ff33550e;
+      box-shadow: 0 0 30px #ff335566;
+      transform: translateY(-2px);
+    }
+
+    /* ── Terminal ──────────────────────────────────────────────── */
+    .term {
+      background: #07070e;
+      border: 1px solid #00ccff22;
+      box-shadow: 0 0 30px #00ccff12;
+    }
+    .tdot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+
+    /* ── Nav ───────────────────────────────────────────────────── */
+    nav {
+      background: rgba(6,6,12,0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid #00ccff14;
+    }
+
+    /* ── Ticker ────────────────────────────────────────────────── */
+    @keyframes ticker { to { transform: translateX(-50%); } }
+    .ticker-inner { animation: ticker 30s linear infinite; white-space: nowrap; display: inline-flex; gap: 3rem; }
+
+    /* ── Float ─────────────────────────────────────────────────── */
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+    .float { animation: float 5s ease-in-out infinite; }
+
+    /* ── Puls ──────────────────────────────────────────────────── */
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+    .blink { animation: blink 1s step-end infinite; }
+    @keyframes pdot { 0%,100%{opacity:1;box-shadow:0 0 6px #00ee77;} 50%{opacity:.4;box-shadow:none;} }
+    .pdot { animation: pdot 1.8s ease-in-out infinite; }
+
+    /* ── Feature-Karte ─────────────────────────────────────────── */
+    .fcard {
+      background: #0d0d16;
+      border: 1px solid #1a1a28;
+      transition: all .3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .fcard::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, #00ccff, transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .fcard:hover::after { opacity: 1; }
+    .fcard:hover { border-color: #00ccff2a; box-shadow: 0 0 30px #00ccff14; transform: translateY(-4px); }
+
+    /* ── Telegram-Feature-Karte (Highlight) ────────────────────── */
+    .tgcard {
+      background: linear-gradient(135deg, #0d0d16, #13131e);
+      border: 1px solid #ffaa0033;
+      box-shadow: 0 0 24px #ffaa0014;
+      transition: all .3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .tgcard::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, #ffaa00, transparent);
+    }
+    .tgcard:hover { box-shadow: 0 0 40px #ffaa0033; transform: translateY(-4px); }
+
+    /* ── Stat-Karte ────────────────────────────────────────────── */
+    .scard { background: linear-gradient(135deg,#0d0d16,#131320); border: 1px solid #1a1a28; }
+
+    /* ── Step-Verbindungslinie ─────────────────────────────────── */
+    .step-connector {
+      position: absolute; top: 28px; left: 50%;
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, #00ccff44, transparent);
+    }
+
+    /* ── Screenshot-Slot ───────────────────────────────────────── */
+    .scshot {
+      background: #0d0d16;
+      border: 1px solid #00ccff1a;
+      box-shadow: 0 0 28px #00ccff0e;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── Radial-Glow-Deko ──────────────────────────────────────── */
+    .rglow-c { background: radial-gradient(circle, #00ccff0a 0%, transparent 70%); }
+    .rglow-m { background: radial-gradient(circle, #ff33550a 0%, transparent 70%); }
+    .rglow-t { background: radial-gradient(circle, #ffaa000a 0%, transparent 70%); }
+
+    /* ── Trennlinie neon ───────────────────────────────────────── */
+    .sep { border: none; border-top: 1px solid #1a1a28; }
+
+    /* ── Tabelle ───────────────────────────────────────────────── */
+    .comp-row { border-bottom: 1px solid #1a1a2833; }
+    .comp-row:hover { background: rgba(255,255,255,0.01); }
+
+    /* ── Badge ─────────────────────────────────────────────────── */
+    .badge-c { background:#00ccff0a; border:1px solid #00ccff33; color:#00ccff88; }
+    .badge-m { background:#ff33550a; border:1px solid #ff335533; color:#ff3355; }
+    .badge-l { background:#00ee770a; border:1px solid #00ee7733; color:#00ee77; }
+    .badge-t { background:#ffaa000a; border:1px solid #ffaa0033; color:#ffaa00; }
+  </style>
+</head>
+<body class="grid-bg">
+
+<!-- ════════════════════════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════════════════════════ -->
+<nav class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+
+    <!-- Logo -->
+    <!-- BILD: Logo.png — Sniperino Marken-Icon in der Navbar -->
+    <a href="#" class="flex items-center gap-3">
+      <img src="./Bilder/Logo.png" alt="Sniperino"
+           class="w-9 h-9 rounded object-cover"
+           style="box-shadow:0 0 14px #00ccff55;border:1px solid #00ccff44;"
+           onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex';" />
+      <span id="logo-fallback"
+            class="hidden w-9 h-9 rounded items-center justify-center"
+            style="background:#00ccff0a;border:1px solid #00ccff44;box-shadow:0 0 12px #00ccff33;">
+        <span class="nc" style="font-size:13px;font-weight:900;">S</span>
+      </span>
+      <span class="nc text-lg font-extrabold tracking-widest uppercase">Sniperino</span>
+    </a>
+
+    <!-- Links -->
+    <div class="hidden md:flex items-center gap-7 text-xs text-gray-500">
+      <a href="#wie-es-funktioniert" class="hover:text-gray-200 transition-colors duration-200">So funktioniert's</a>
+      <a href="#features"            class="hover:text-gray-200 transition-colors duration-200">Features</a>
+      <a href="#warum"               class="hover:text-gray-200 transition-colors duration-200">Warum Sniperino</a>
+      <a href="#screenshots"         class="hover:text-gray-200 transition-colors duration-200">Screenshots</a>
+    </div>
+
+    <a href="#zugang" class="btn-t px-5 py-2 rounded text-xs font-bold tracking-widest uppercase hidden md:block">
+      Telegram-Zugang
+    </a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TICKER
+════════════════════════════════════════════════════════════════ -->
+<div class="fixed z-40 left-0 right-0 overflow-hidden py-[5px]"
+     style="top:57px;background:#060611;border-bottom:1px solid #00ccff12;">
+  <div class="ticker-inner text-xs text-gray-600">
+    <span class="nl">● BOT AKTIV</span>
+    <span>TELEGRAM-SIGNALE ECHTZEIT</span>
+    <span class="nc">WEBSOCKET PUMP.FUN</span>
+    <span>HELIUS ENTRY-PRICE</span>
+    <span class="nt">BONDING CURVE DETECTION</span>
+    <span class="nm">PARTIAL SELL ✓</span>
+    <span>STOP-LOSS ✓</span>
+    <span class="nc">ECHTZEIT-TRACKING ✓</span>
+    <span>AUTO-SELL BEI MULTIPLE ✓</span>
+    <span class="nl">REALIZED PROFIT-VERLAUF ✓</span>
+    <span>RAYDIUM / PUMPSWAP TRACKING</span>
+    <span class="nt">LIQUIDITY-FILTER ✓</span>
+    <span class="nm">MULTI-TRADE LIMIT ✓</span>
+    <!-- Duplikat -->
+    <span class="nl">● BOT AKTIV</span>
+    <span>TELEGRAM-SIGNALE ECHTZEIT</span>
+    <span class="nc">WEBSOCKET PUMP.FUN</span>
+    <span>HELIUS ENTRY-PRICE</span>
+    <span class="nt">BONDING CURVE DETECTION</span>
+    <span class="nm">PARTIAL SELL ✓</span>
+    <span>STOP-LOSS ✓</span>
+    <span class="nc">ECHTZEIT-TRACKING ✓</span>
+    <span>AUTO-SELL BEI MULTIPLE ✓</span>
+    <span class="nl">REALIZED PROFIT-VERLAUF ✓</span>
+    <span>RAYDIUM / PUMPSWAP TRACKING</span>
+    <span class="nt">LIQUIDITY-FILTER ✓</span>
+    <span class="nm">MULTI-TRADE LIMIT ✓</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════════ -->
+<section class="relative min-h-screen flex items-center pt-36 pb-20 scanlines overflow-hidden">
+
+  <!-- Hintergrund-Glows -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[800px] h-[800px] rounded-full rglow-c"></div>
+    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full rglow-m"></div>
+    <div class="absolute top-1/4 right-0 w-[400px] h-[400px] rounded-full rglow-t"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
+
+    <!-- Links: Text & Terminal -->
+    <div>
+      <div class="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full text-xs tracking-widest uppercase badge-t">
+        <span class="tdot pdot" style="background:#00ee77;"></span>
+        Telegram Sniper Bot — Pump.fun
+      </div>
+
+      <h1 class="text-5xl md:text-6xl lg:text-[4.2rem] font-extrabold leading-[1.05] mb-5 tracking-tight">
+        <span class="grad">SNIPERINO</span><br/>
+        <span class="text-gray-100 text-2xl md:text-3xl font-bold leading-snug block mt-2">
+          Dein Telegram-Kanal<br/>ist dein Snipe-Signal.
+        </span>
+      </h1>
+
+      <p class="text-gray-400 text-base mb-6 leading-relaxed max-w-lg">
+        Sniperino lauscht in deinen <span class="nt">Telegram-Gruppen</span> und Chats nach Mint-Adressen.
+        Sobald ein passendes Signal reinkommt, wird automatisch und blitzschnell gesniped —
+        nach deinen Regeln, mit deinem Wallet.
+      </p>
+
+      <!-- Terminal-Snippet -->
+      <div class="term rounded-xl p-4 mb-7 max-w-md">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="tdot" style="background:#ff5f57;"></span>
+          <span class="tdot" style="background:#febc2e;"></span>
+          <span class="tdot" style="background:#28c840;"></span>
+          <span class="text-xs text-gray-700 ml-2 tracking-wider">sniperino — live</span>
+        </div>
+        <div class="text-xs leading-[1.9]">
+          <span class="text-gray-600">[12:04:31]</span> <span class="nc">Telegram-Listener aktiv</span> — 4 Chats überwacht<br/>
+          <span class="text-gray-600">[12:04:44]</span> <span class="nt">📨 Signal erkannt</span> — Chat: Alpha Calls VIP<br/>
+          <span class="text-gray-600">[12:04:44]</span> <span class="text-gray-400">Mint: </span><span style="color:#a78bfa;">7xK9...mR4f</span> <span class="text-gray-600">→ Regel trifft zu</span><br/>
+          <span class="text-gray-600">[12:04:44]</span> <span class="nm">⚡ Kauf wird ausgeführt — 0.5 SOL</span><br/>
+          <span class="text-gray-600">[12:04:45]</span> <span class="nl">✓ Snipe erfolgreich — TX bestätigt</span><br/>
+          <span class="text-gray-600">[12:04:45]</span> <span class="nc">WS-Tracking aktiv für $BONKRAT</span><span class="blink nc">_</span>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-4">
+        <a href="#zugang"              class="btn-t px-7 py-3 rounded font-bold tracking-widest uppercase text-xs">🚀 Zugang erhalten</a>
+        <a href="#wie-es-funktioniert" class="btn-m px-7 py-3 rounded font-bold tracking-widest uppercase text-xs">So funktioniert's</a>
+      </div>
+    </div>
+
+    <!-- Rechts: Hero-Ape -->
+    <!--
+      BILD: ChatGPT Image 25. März 2026, 11_32_38.png
+      → Hero-Section, rechte Hälfte, schwebendes Hauptbild.
+      Empfehlung: der coolste/kräftigste Ape deiner Sammlung.
+    -->
+    <div class="flex justify-center items-center">
+      <div class="relative float">
+        <div class="absolute inset-0 rounded-full"
+             style="background:radial-gradient(circle, #00ccff16 0%, transparent 65%);transform:scale(1.5);"></div>
+        <div class="absolute inset-0 rounded-full"
+             style="background:radial-gradient(circle, #ff335508 0%, transparent 70%);transform:scale(1.8);"></div>
+        <img src="./Bilder/ChatGPT%20Image%2025.%20M%C3%A4rz%202026%2C%2011_32_38.png"
+             alt="Sniperino — Hero"
+             class="relative z-10 w-72 md:w-[410px] rounded-2xl object-cover"
+             style="filter:drop-shadow(0 0 36px #00ccff44) drop-shadow(0 0 80px #ff335522);"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="hidden w-72 md:w-96 h-72 md:h-96 rounded-2xl gc flex-col items-center justify-center gap-3"
+             style="background:#0d0d16;">
+          <span style="font-size:4rem;">🦍</span>
+          <span class="nc text-xs tracking-widest">Hero-Bild</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     STATS-LEISTE
+════════════════════════════════════════════════════════════════ -->
+<div style="background:#0a0a14;border-top:1px solid #181828;border-bottom:1px solid #181828;">
+  <div class="max-w-7xl mx-auto px-6 py-7 grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="scard rounded-xl p-5 text-center">
+      <div class="nc text-3xl font-extrabold mb-1">&lt; 500ms</div>
+      <div class="text-xs text-gray-600 uppercase tracking-widest">Signal → Kauf</div>
+    </div>
+    <div class="scard rounded-xl p-5 text-center">
+      <div class="nt text-3xl font-extrabold mb-1">∞</div>
+      <div class="text-xs text-gray-600 uppercase tracking-widest">Telegram-Chats</div>
+    </div>
+    <div class="scard rounded-xl p-5 text-center">
+      <div class="nm text-3xl font-extrabold mb-1">10+</div>
+      <div class="text-xs text-gray-600 uppercase tracking-widest">Profi-Features</div>
+    </div>
+    <div class="scard rounded-xl p-5 text-center">
+      <div class="nl text-3xl font-extrabold mb-1">24/7</div>
+      <div class="text-xs text-gray-600 uppercase tracking-widest">Dauerbetrieb</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     WIE ES FUNKTIONIERT
+════════════════════════════════════════════════════════════════ -->
+<section id="wie-es-funktioniert" class="py-28 relative">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="text-center mb-16">
+      <div class="inline-block px-3 py-1 rounded text-xs tracking-widest uppercase mb-4 badge-c">
+        Funktionsprinzip
+      </div>
+      <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
+        <span class="nc">Telegram</span> gibt dir Freiheit.
+      </h2>
+      <p class="text-gray-500 max-w-2xl mx-auto text-sm leading-relaxed">
+        Keine Mint-Adressen manuell eintippen. Keine Charts sekundenlang beobachten. Nicht ständig am Handy kleben.<br/>
+        Du kannst kochen, feiern gehen, schlafen oder einfach leben —
+        <span class="text-gray-300">Sniperino hört zu und handelt für dich.</span>
+      </p>
+    </div>
+
+    <!-- Haupt-Ablauf-Diagramm -->
+    <div class="grid md:grid-cols-4 gap-0 mb-20 relative">
+
+      <!-- Schritt 1 -->
+      <div class="relative text-center px-4 pb-10 md:pb-0">
+        <div class="w-16 h-16 rounded-full mx-auto mb-5 flex items-center justify-center font-extrabold text-lg nc"
+             style="background:#00ccff0d;border:2px solid #00ccff55;box-shadow:0 0 24px #00ccff33;">01</div>
+        <div class="hidden md:block absolute top-8 left-[calc(50%+32px)] right-0 h-px"
+             style="background:linear-gradient(90deg,#00ccff66,transparent);"></div>
+        <h3 class="nc font-bold text-sm uppercase tracking-wider mb-2">Regel festlegen</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Definiere pro Telegram-Chat oder User eine Regel: welche Signale gelten, welches Wallet kauft, wie viel SOL.
+        </p>
+      </div>
+
+      <!-- Schritt 2 -->
+      <div class="relative text-center px-4 pb-10 md:pb-0">
+        <div class="w-16 h-16 rounded-full mx-auto mb-5 flex items-center justify-center font-extrabold text-lg nt"
+             style="background:#ffaa000d;border:2px solid #ffaa0055;box-shadow:0 0 24px #ffaa0033;">02</div>
+        <div class="hidden md:block absolute top-8 left-[calc(50%+32px)] right-0 h-px"
+             style="background:linear-gradient(90deg,#ffaa0066,transparent);"></div>
+        <h3 class="nt font-bold text-sm uppercase tracking-wider mb-2">Signal eingeht</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Eine Mint-Adresse erscheint in deinem überwachten Chat. Sniperino erkennt sie sofort und prüft alle Regeln.
+        </p>
+      </div>
+
+      <!-- Schritt 3 -->
+      <div class="relative text-center px-4 pb-10 md:pb-0">
+        <div class="w-16 h-16 rounded-full mx-auto mb-5 flex items-center justify-center font-extrabold text-lg nm"
+             style="background:#ff33550d;border:2px solid #ff335555;box-shadow:0 0 24px #ff335533;">03</div>
+        <div class="hidden md:block absolute top-8 left-[calc(50%+32px)] right-0 h-px"
+             style="background:linear-gradient(90deg,#ff335566,transparent);"></div>
+        <h3 class="nm font-bold text-sm uppercase tracking-wider mb-2">Automatisch kaufen</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Trifft eine Regel zu, wird automatisch gesniped. Stop-Loss & Liquidity-Filter greifen bereits vor dem Kauf.
+        </p>
+      </div>
+
+      <!-- Schritt 4 -->
+      <div class="relative text-center px-4">
+        <div class="w-16 h-16 rounded-full mx-auto mb-5 flex items-center justify-center font-extrabold text-lg nl"
+             style="background:#00ee770d;border:2px solid #00ee7755;box-shadow:0 0 24px #00ee7733;">04</div>
+        <h3 class="nl font-bold text-sm uppercase tracking-wider mb-2">Managen & verkaufen</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Position läuft: WS-Tracking, Auto-Sell bei definiertem Multiple, Partial Sell, Stop-Loss — alles automatisiert oder manuell.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Split: Ape + erweitertes Erklärungsterminal -->
+    <div class="flex flex-col md:flex-row items-center gap-12">
+
+      <!--
+        BILD: er macht sich bereit.png
+        → "Wie es funktioniert"-Sektion, linke Spalte.
+        Der Ape bereitet sich vor — passt perfekt zum Konzept "bereit zum Snipe".
+      -->
+      <div class="flex-shrink-0 w-full md:w-96">
+        <img src="./Bilder/er%20macht%20sich%20bereit.png"
+             alt="Sniperino Ape — Bereit zum Snipe"
+             class="w-full rounded-2xl object-cover"
+             style="filter:drop-shadow(0 0 28px #00ee7744);max-height:460px;object-position:top;"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="hidden w-full h-72 rounded-2xl gl flex-col items-center justify-center gap-3"
+             style="background:#0d0d16;">
+          <span style="font-size:3rem;">🦍</span>
+          <span class="nl text-xs tracking-widest">er macht sich bereit.png</span>
+        </div>
+      </div>
+
+      <!-- Regel-System Erklärung -->
+      <div class="flex-1 space-y-5">
+        <h3 class="text-2xl md:text-3xl font-extrabold nc leading-tight">
+          Präzises Regel-System<br/>
+          <span class="text-gray-300 font-bold text-xl">pro Chat, pro User — vollständig unter deiner Kontrolle.</span>
+        </h3>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          Du kannst ganze Telegram-Kanäle tracken oder auf einzelne, vertrauenswürdige User reagieren —
+          auch außerhalb von Gruppen, direkt aus privaten Chats.
+          Besonders stark: Du schützt dich vor Spam und Manipulation, indem du in einer Gruppe nur auf Signale
+          von bestimmten Usern reagierst. Niemand sonst kann deinen Bot triggern.
+          Jede Regel bringt eigene Parameter mit: Kaufbetrag, Auto-Sell-Multiple, Stop-Loss und Cooldown —
+          damit du für jeden Kanal eine eigene Strategie fahren kannst, ohne Kompromisse.
+        </p>
+
+        <div class="term rounded-xl p-4 text-xs">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="tdot" style="background:#ff5f57;"></span>
+            <span class="tdot" style="background:#febc2e;"></span>
+            <span class="tdot" style="background:#28c840;"></span>
+            <span class="text-gray-700 ml-2 tracking-wider">rules.config</span>
+          </div>
+          <div class="leading-[2] space-y-1">
+            <div><span class="nt">chat:</span> <span class="text-gray-300">"Alpha Calls VIP"</span></div>
+            <div class="pl-4"><span class="nc">wallet:</span> <span class="text-gray-400">Wallet_1</span> &nbsp;<span class="nc">betrag:</span> <span class="nl">0.5 SOL</span></div>
+            <div class="pl-4"><span class="nc">stop_loss:</span> <span class="nm">-40%</span> &nbsp;<span class="nc">auto_sell:</span> <span class="nl">3× Multiple</span></div>
+            <div class="pl-4"><span class="nc">liquidity_min:</span> <span class="nl">5 SOL</span> &nbsp;<span class="nc">max_trades:</span> <span class="nt">3</span></div>
+            <div class="mt-2 text-gray-700">────────────────────────────────</div>
+            <div><span class="nt">user:</span> <span class="text-gray-300">"@top_alpha"</span></div>
+            <div class="pl-4"><span class="nc">wallet:</span> <span class="text-gray-400">Wallet_2</span> &nbsp;<span class="nc">betrag:</span> <span class="nl">1.0 SOL</span></div>
+            <div class="pl-4"><span class="nc">stop_loss:</span> <span class="nm">-30%</span> &nbsp;<span class="nc">auto_sell:</span> <span class="nl">5× Multiple</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     FEATURES
+════════════════════════════════════════════════════════════════ -->
+<section id="features"
+         style="background:#0a0a14;border-top:1px solid #181828;border-bottom:1px solid #181828;"
+         class="py-28">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="text-center mb-16">
+      <div class="inline-block px-3 py-1 rounded text-xs tracking-widest uppercase mb-4 badge-m">
+        Feature-Set
+      </div>
+      <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
+        <span class="nm">Alles drin.</span><br/>
+        <span class="text-gray-200">Kein Feature-Wunsch offen.</span>
+      </h2>
+      <p class="text-gray-500 max-w-2xl mx-auto text-sm leading-relaxed">
+        Sniperino deckt den gesamten Trade-Lifecycle ab — vom Telegram-Signal bis zum realisierten Gewinn.
+      </p>
+    </div>
+
+    <!-- Top-Feature: Telegram-Sniper (Highlight) -->
+    <div class="tgcard rounded-2xl p-8 mb-8">
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+        <div class="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center text-3xl"
+             style="background:#ffaa0010;border:1px solid #ffaa0033;">📨</div>
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-2">
+            <h3 class="nt text-lg font-extrabold uppercase tracking-wide">Telegram-gesteuertes Snipen</h3>
+            <span class="px-2 py-[2px] rounded text-xs badge-t font-bold tracking-wider">KERN-FEATURE</span>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Der Bot verbindet sich mit Telegram und lauscht in beliebig vielen Gruppen und Chats gleichzeitig.
+            Pro Chat/User kannst du eigene Regeln festlegen: Wallet, SOL-Betrag, Stop-Loss, Auto-Sell-Multiple und Liquidity-Filter.
+            Kommt eine Mint-Adresse rein und trifft eine Regel — wird sofort und automatisch gekauft.
+          </p>
+        </div>
+        <div class="flex-shrink-0 text-center">
+          <div class="nt text-2xl font-extrabold">∞ Chats</div>
+          <div class="text-xs text-gray-600 uppercase tracking-wide">gleichzeitig</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature-Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#00ccff0d;border:1px solid #00ccff22;">🔌</div>
+        <h3 class="nc text-sm font-bold mb-2 uppercase tracking-wide">PumpPortal WS — Echtzeit-Tracking</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Nach jedem Kauf öffnet Sniperino sofort einen WebSocket-Stream für diesen Token. Preis, Bonding-Curve-Status und Trade-Aktivität werden live überwacht — ohne Polling, ohne Verzögerung.
+        </p>
+      </div>
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#ff33550d;border:1px solid #ff335522;">📉</div>
+        <h3 class="nm text-sm font-bold mb-2 uppercase tracking-wide">Pre-Migration Bonding-Curve Detection</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Sniperino erkennt, wann ein Token kurz vor dem Graduation (Migration zu Raydium / PumpSwap) steht. Du kannst gezielt vor der Migration kaufen — bevor das große Volumen kommt.
+        </p>
+      </div>
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#00ee770d;border:1px solid #00ee7722;">🚀</div>
+        <h3 class="nl text-sm font-bold mb-2 uppercase tracking-wide">Post-Migration Pool-Tracking</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Wird ein Token zu Raydium oder PumpSwap migriert, verfolgt der Bot die Position nahtlos weiter. Kein manuelles Umschalten — das Tracking läuft durch.
+        </p>
+      </div>
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#00ccff0d;border:1px solid #00ccff22;">✂️</div>
+        <h3 class="nc text-sm font-bold mb-2 uppercase tracking-wide">Partial Sell — 25 / 50 / 75 / 100 %</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Verkaufe genau den Anteil deiner Position, den du willst: 25%, 50%, 75% oder alles — mit einem Befehl. Gewinne einloggen, ohne die Position zu schließen.
+        </p>
+      </div>
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#ffaa000d;border:1px solid #ffaa0022;">🎯</div>
+        <h3 class="nt text-sm font-bold mb-2 uppercase tracking-wide">Auto-Sell bei definiertem Multiple</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Lege pro Trade oder Regel ein Gewinn-Multiple fest (z.B. 3×, 5×, 10×). Sobald der Token dieses Multiple erreicht, verkauft Sniperino automatisch — du schläfst, der Bot druckt.
+        </p>
+      </div>
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#ff33550d;border:1px solid #ff335522;">🛡️</div>
+        <h3 class="nm text-sm font-bold mb-2 uppercase tracking-wide">Absoluter Stop-Loss</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Definiere einen prozentualen Floor unter dem Einstiegspreis. Fällt der Token darunter, verkauft Sniperino sofort vollständig — kein Rug, kein Dump überlebt unbemerkt.
+        </p>
+      </div>
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#00ee770d;border:1px solid #00ee7722;">📊</div>
+        <h3 class="nl text-sm font-bold mb-2 uppercase tracking-wide">Realized Profit History</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Jeder geschlossene Trade wird geloggt: Entry-Preis (nach dem Kauf via Helius aufgelöst), Exit-Preis, SOL-Gewinn/Verlust, Timestamp und Quelle des Signals. Vollständige Trade-Übersicht jederzeit.
+        </p>
+      </div>
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#00ccff0d;border:1px solid #00ccff22;">🔍</div>
+        <h3 class="nc text-sm font-bold mb-2 uppercase tracking-wide">Jupiter Ultra + Helius</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Käufe und Verkäufe laufen über <span style="color:#00ccff88;">Jupiter Ultra</span> — optimaler Pfad, beste Ausführung, kein manueller Slippage-Parameter nötig. Helius wird für schnelle Entry-Price-Auflösung nach dem Kauf und für Migration-Detection eingesetzt.
+        </p>
+      </div>
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#ffaa000d;border:1px solid #ffaa0022;">💧</div>
+        <h3 class="nt text-sm font-bold mb-2 uppercase tracking-wide">Liquidity-Filter</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Lege eine Mindest-Liquidität (in SOL) fest. Tokens mit zu wenig Liquidität werden automatisch übersprungen — kein Kauf in illiquide Fallen.
+        </p>
+      </div>
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#ff33550d;border:1px solid #ff335522;">🔢</div>
+        <h3 class="nm text-sm font-bold mb-2 uppercase tracking-wide">Multi-Trade Limit</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Begrenze, wie viele Trades gleichzeitig offen sein dürfen. Kein unkontrolliertes Akkumulieren von Positionen — du behältst die Übersicht und das Risiko im Griff.
+        </p>
+      </div>
+
+      <div class="fcard rounded-xl p-6">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 text-xl"
+             style="background:#00ccff0d;border:1px solid #00ccff22;">💾</div>
+        <h3 class="nc text-sm font-bold mb-2 uppercase tracking-wide">Lokal & persistent</h3>
+        <p class="text-gray-500 text-xs leading-relaxed">
+          Alles läuft lokal auf deinem Rechner. Keine Cloud, kein Abo-Service, kein Dritter mit Zugriff auf deine Wallets. Config und Trade-History überleben Neustarts.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Feature-Split: Ape Analysiert -->
+    <!--
+      BILD: analysiert.png
+      → Features-Sektion, rechte Spalte.
+      Der Ape schaut auf Daten/Charts — perfekt für Profit-History & PnL-Tracking.
+    -->
+    <div class="flex flex-col md:flex-row-reverse items-center gap-12">
+      <div class="flex-shrink-0 w-full md:w-96">
+        <img src="./Bilder/analysiert.png"
+             alt="Sniperino Ape — Analysiert"
+             class="w-full rounded-2xl object-cover"
+             style="filter:drop-shadow(0 0 26px #00ee7744);max-height:460px;object-position:top;"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="hidden w-full h-72 rounded-2xl gl flex-col items-center justify-center gap-3"
+             style="background:#0a0a14;">
+          <span style="font-size:3rem;">🦍</span>
+          <span class="nl text-xs tracking-widest">analysiert.png</span>
+        </div>
+      </div>
+      <div class="flex-1 space-y-5">
+        <h3 class="text-2xl md:text-3xl font-extrabold nl leading-tight">
+          Vollständige Trade-Übersicht.<br/>
+          <span class="text-gray-300 font-bold text-xl">Jeder Cent nachvollziehbar.</span>
+        </h3>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          Die Realized Profit History zeigt jeden abgeschlossenen Trade mit allen relevanten Daten.
+          Käufe und Verkäufe laufen über Jupiter Ultra — kein manuelles Slippage-Tuning nötig.
+          Der Entry-Preis wird nach dem Kauf via Helius präzise aufgelöst, damit du immer weißt, was du wirklich bezahlt hast.
+        </p>
+        <div class="term rounded-xl p-4 text-xs">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="tdot" style="background:#ff5f57;"></span>
+            <span class="tdot" style="background:#febc2e;"></span>
+            <span class="tdot" style="background:#28c840;"></span>
+            <span class="text-gray-700 ml-2">profit_history.log</span>
+          </div>
+          <div class="leading-[1.9]">
+            <div class="text-gray-600 mb-1">TOKEN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ENTRY &nbsp;&nbsp; EXIT &nbsp;&nbsp;&nbsp; PNL &nbsp;&nbsp;&nbsp;&nbsp; QUELLE</div>
+            <div><span class="nl">$BONKRAT</span>  <span class="text-gray-500">0.50 SOL</span>  <span class="text-gray-500">1.90 SOL</span>  <span class="nl">+280%</span>  <span class="nt">Alpha VIP</span></div>
+            <div><span class="nl">$MOONRAT</span>  <span class="text-gray-500">0.30 SOL</span>  <span class="text-gray-500">1.05 SOL</span>  <span class="nl">+250%</span>  <span class="nt">@top_alpha</span></div>
+            <div><span class="nm">$COPCAT</span>   <span class="text-gray-500">0.20 SOL</span>  <span class="text-gray-500">0.11 SOL</span>  <span class="nm">-45%</span>   <span class="nt">Alpha VIP</span></div>
+            <div class="text-gray-700 mt-1">─────────────────────────────────────</div>
+            <div class="mt-1"><span class="text-gray-400">Gesamt realisiert: </span><span class="nc">+2.15 SOL</span> &nbsp;<span class="text-gray-600">| 3 Trades</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     WARUM SNIPERINO
+════════════════════════════════════════════════════════════════ -->
+<section id="warum" class="py-28 relative">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="text-center mb-16">
+      <div class="inline-block px-3 py-1 rounded text-xs tracking-widest uppercase mb-4 badge-l">
+        Warum Sniperino
+      </div>
+      <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
+        Manuelles Snipen ist<br/><span class="nm">verloren gegangenes Geld</span>.
+      </h2>
+      <p class="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
+        Bis du einen Call in Telegram siehst, die Mint kopierst, das Tab öffnest und die Transaktion abschickst —
+        haben andere bereits ge-x3. Sniperino eliminiert diese Verzögerung komplett.
+      </p>
+    </div>
+
+    <!-- Vergleich + Ape nebeneinander -->
+    <div class="flex flex-col lg:flex-row gap-12 items-start mb-20">
+
+      <!-- Vergleichstabelle -->
+      <div class="flex-1 overflow-x-auto">
+        <table class="w-full text-xs">
+          <thead>
+            <tr style="border-bottom:1px solid #1a1a28;">
+              <th class="text-left py-4 px-4 text-gray-600 uppercase tracking-widest font-normal">Merkmal</th>
+              <th class="py-4 px-4 nc uppercase tracking-widest text-center">Sniperino</th>
+              <th class="py-4 px-4 text-gray-600 uppercase tracking-widest text-center font-normal">Manuell</th>
+              <th class="py-4 px-4 text-gray-600 uppercase tracking-widest text-center font-normal">Andere Bots</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="comp-row">
+              <td class="py-3 px-4 text-gray-400">Telegram-Signal → Kauf</td>
+              <td class="py-3 px-4 text-center nl font-bold">automatisch</td>
+              <td class="py-3 px-4 text-center nm">5–30 Sek.</td>
+              <td class="py-3 px-4 text-center text-gray-600">selten</td>
+            </tr>
+            <tr class="comp-row">
+              <td class="py-3 px-4 text-gray-400">Regeln pro Chat/User</td>
+              <td class="py-3 px-4 text-center nl">✓</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+            </tr>
+            <tr class="comp-row">
+              <td class="py-3 px-4 text-gray-400">Bonding-Curve Detection</td>
+              <td class="py-3 px-4 text-center nl">✓</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+            </tr>
+            <tr class="comp-row">
+              <td class="py-3 px-4 text-gray-400">Post-Migration Tracking</td>
+              <td class="py-3 px-4 text-center nl">✓</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+              <td class="py-3 px-4 text-center text-gray-600">selten</td>
+            </tr>
+            <tr class="comp-row">
+              <td class="py-3 px-4 text-gray-400">Partial Sell</td>
+              <td class="py-3 px-4 text-center nl">✓</td>
+              <td class="py-3 px-4 text-center text-gray-600">langsam</td>
+              <td class="py-3 px-4 text-center text-gray-600">manchmal</td>
+            </tr>
+            <tr class="comp-row">
+              <td class="py-3 px-4 text-gray-400">Auto-Sell bei Multiple</td>
+              <td class="py-3 px-4 text-center nl">✓</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+              <td class="py-3 px-4 text-center text-gray-600">selten</td>
+            </tr>
+            <tr class="comp-row">
+              <td class="py-3 px-4 text-gray-400">Jupiter Ultra + Helius</td>
+              <td class="py-3 px-4 text-center nl">✓</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+            </tr>
+            <tr class="comp-row">
+              <td class="py-3 px-4 text-gray-400">Liquidity-Filter</td>
+              <td class="py-3 px-4 text-center nl">✓</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+              <td class="py-3 px-4 text-center text-gray-600">manchmal</td>
+            </tr>
+            <tr class="comp-row">
+              <td class="py-3 px-4 text-gray-400">Lokal / Kein Cloud-Abo</td>
+              <td class="py-3 px-4 text-center nl">✓</td>
+              <td class="py-3 px-4 text-center text-gray-600">—</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-gray-400">Realized Profit History</td>
+              <td class="py-3 px-4 text-center nl">✓</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+              <td class="py-3 px-4 text-center nm">✗</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!--
+        BILD: Falsch.png
+        → Warum-Sektion, rechts neben Vergleichstabelle.
+        "So machen es die anderen" — der Ape zeigt, was falsch läuft.
+      -->
+      <div class="flex-shrink-0 w-full lg:w-64 flex flex-col items-center gap-3">
+        <img src="./Bilder/Falsch.png"
+             alt="Sniperino Ape — So machen es andere falsch"
+             class="w-full max-w-[260px] rounded-2xl object-cover"
+             style="filter:drop-shadow(0 0 22px #ff335544);"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="hidden w-56 h-56 rounded-2xl gm flex-col items-center justify-center gap-3"
+             style="background:#080810;">
+          <span style="font-size:3rem;">🦍</span>
+          <span class="nm text-xs tracking-widest">Falsch.png</span>
+        </div>
+        <p class="nm text-xs tracking-widest text-center uppercase">So machen es andere</p>
+      </div>
+
+    </div>
+
+    <!-- Ape optimiert arbeitet + Text -->
+    <!--
+      BILD: arbeitet optimiert.png
+      → Warum-Sektion zweite Reihe, linke Spalte.
+      Der Bot arbeitet optimiert — zeigt technische Zuverlässigkeit & Speed.
+    -->
+    <div class="flex flex-col md:flex-row items-center gap-12 mb-20">
+      <div class="flex-shrink-0 w-full md:w-96">
+        <img src="./Bilder/arbeitet%20optimiert.png"
+             alt="Sniperino Ape — Arbeitet optimiert"
+             class="w-full rounded-2xl object-cover"
+             style="filter:drop-shadow(0 0 26px #00ccff44);max-height:440px;object-position:top;"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="hidden w-full h-72 rounded-2xl gc flex-col items-center justify-center gap-3"
+             style="background:#080810;">
+          <span style="font-size:3rem;">🦍</span>
+          <span class="nc text-xs tracking-widest">arbeitet optimiert.png</span>
+        </div>
+      </div>
+      <div class="flex-1 space-y-6">
+        <h3 class="text-2xl md:text-3xl font-extrabold nc leading-tight">
+          Technisch kompromisslos.<br/>
+          <span class="text-gray-200 font-bold text-xl">Gebaut für den echten Degen-Alltag.</span>
+        </h3>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          Sniperino läuft stabil über Stunden und Tage. Kein Absturz bei hohem Volumen, kein Verbindungsabbruch der unbemerkt bleibt.
+          WebSocket-Verbindungen werden automatisch wiederhergestellt. Alle relevanten Events landen in der Konsole — transparent und nachvollziehbar.
+        </p>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="scard rounded-lg p-4">
+            <div class="nc text-lg font-extrabold mb-1">WS-First</div>
+            <div class="text-xs text-gray-600">Kein Polling — echter Push-Stream via PumpPortal WebSocket</div>
+          </div>
+          <div class="scard rounded-lg p-4">
+            <div class="nt text-lg font-extrabold mb-1">Jupiter Ultra</div>
+            <div class="text-xs text-gray-600">Buy & Sell — optimaler Swap-Pfad, automatisch. Helius für Entry-Price & Migration-Detection</div>
+          </div>
+          <div class="scard rounded-lg p-4">
+            <div class="nl text-lg font-extrabold mb-1">Auto-Retry</div>
+            <div class="text-xs text-gray-600">Fehlgeschlagene Transaktionen werden automatisch wiederholt</div>
+          </div>
+          <div class="scard rounded-lg p-4">
+            <div class="nm text-lg font-extrabold mb-1">Lokal</div>
+            <div class="text-xs text-gray-600">Kein Cloud-Server. Deine Keys verlassen deinen Rechner nicht</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial -->
+    <!--
+      BILD: Aha Moment.png
+      → Warum-Sektion, Quote/Testimonial-Block.
+      Der "Aha-Moment" — perfekt als Avatar für ein Nutzerzitat.
+    -->
+    <div class="gc rounded-2xl p-8 md:p-12 text-center max-w-3xl mx-auto relative overflow-hidden">
+      <div class="absolute inset-0 rglow-c pointer-events-none"></div>
+      <img src="./Bilder/Aha%20Moment.png"
+           alt="Sniperino Ape — Aha Moment"
+           class="w-20 h-20 rounded-full mx-auto mb-5 object-cover object-top"
+           style="border:2px solid #00ccff44;box-shadow:0 0 20px #00ccff44;"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+      <div class="hidden" style="font-size:2.5rem;margin-bottom:1.25rem;">🦍</div>
+      <p class="text-lg md:text-xl text-gray-200 italic mb-4 leading-relaxed relative z-10">
+        "Ich verfolge drei Alpha-Kanäle gleichzeitig. Früher habe ich immer zu spät reagiert — zu langsam kopiert, zu spät gedrückt, zu teuer gekauft. Seit ich Sniperino nutze, bin ich drin, bevor die meisten den Call überhaupt gelesen haben."
+      </p>
+      <span class="nc text-xs tracking-widest">— degen_ape.sol &nbsp;|&nbsp; mehrfach 5×+ via Sniperino</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SCREENSHOTS
+════════════════════════════════════════════════════════════════ -->
+<section id="screenshots"
+         style="background:#0a0a14;border-top:1px solid #181828;border-bottom:1px solid #181828;"
+         class="py-28">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="text-center mb-16">
+      <div class="inline-block px-3 py-1 rounded text-xs tracking-widest uppercase mb-4 badge-m">
+        UI-Vorschau
+      </div>
+      <h2 class="text-4xl md:text-5xl font-extrabold mb-4 text-gray-100">
+        Cleanes Interface.<br/><span class="nm">Kein Ballast.</span>
+      </h2>
+      <p class="text-gray-500 max-w-xl mx-auto text-sm">
+        Terminal-natives Design. Alle Infos auf einen Blick — ohne unnötigen Overhead.
+      </p>
+    </div>
+
+    <!-- Screenshot 1: Dashboard — volle Breite -->
+    <div class="mb-6">
+      <div class="scshot rounded-2xl overflow-hidden"
+           style="border:1px solid #00ccff2a;box-shadow:0 0 40px #00ccff14;">
+        <img src="./Bilder/Dashboard.png"
+             alt="Sniperino — Dashboard"
+             class="w-full object-cover object-top"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="hidden h-48 items-center justify-center flex-col gap-2">
+          <span class="nc text-xs tracking-widest uppercase">Dashboard.png</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-center gap-3 mt-3">
+        <span class="w-2 h-2 rounded-full" style="background:#00ccff;box-shadow:0 0 6px #00ccff;"></span>
+        <span class="nc text-xs tracking-widest uppercase">Haupt-Dashboard — Übersicht aller Positionen</span>
+      </div>
+    </div>
+
+    <!-- Screenshots 2 & 3: DetailsTradeEvent + RulesAnlegen — nebeneinander -->
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+
+      <!-- BILD: DetailsTradeEvent.png — Detail-Tab mit Trade-Events und Partial-Sell -->
+      <div>
+        <div class="scshot rounded-2xl overflow-hidden"
+             style="border:1px solid #ff33552a;box-shadow:0 0 32px #ff335512;">
+          <img src="./Bilder/DetailsTradeEvent.png"
+               alt="Sniperino — Detail Trade Event"
+               class="w-full object-cover object-top"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="hidden h-40 items-center justify-center flex-col gap-2">
+            <span class="nm text-xs tracking-widest uppercase">DetailsTradeEvent.png</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-center gap-3 mt-3">
+          <span class="w-2 h-2 rounded-full" style="background:#ff3355;box-shadow:0 0 6px #ff3355;"></span>
+          <span class="nm text-xs tracking-widest uppercase">Detail-Tab — Trade-History & Partial-Sell-Tracking</span>
+        </div>
+      </div>
+
+      <!-- BILD: RulesAnlegen.png — Regelkonfiguration pro Telegram-Chat/User -->
+      <div>
+        <div class="scshot rounded-2xl overflow-hidden"
+             style="border:1px solid #ffaa002a;box-shadow:0 0 32px #ffaa0012;">
+          <img src="./Bilder/RulesAnlegen.png"
+               alt="Sniperino — Rules anlegen"
+               class="w-full object-cover object-top"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="hidden h-40 items-center justify-center flex-col gap-2">
+            <span class="nt text-xs tracking-widest uppercase">RulesAnlegen.png</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-center gap-3 mt-3">
+          <span class="w-2 h-2 rounded-full" style="background:#ffaa00;box-shadow:0 0 6px #ffaa00;"></span>
+          <span class="nt text-xs tracking-widest uppercase">Telegram-Regeln anlegen & konfigurieren</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Screenshot 4: Systemlog — volle Breite -->
+    <div class="mb-12">
+      <div class="scshot rounded-2xl overflow-hidden"
+           style="border:1px solid #00ee772a;box-shadow:0 0 40px #00ee7714;">
+        <img src="./Bilder/Systemlog.png"
+             alt="Sniperino — Systemlog"
+             class="w-full object-cover object-top"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="hidden h-48 items-center justify-center flex-col gap-2">
+          <span class="nl text-xs tracking-widest uppercase">Systemlog.png</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-center gap-3 mt-3">
+        <span class="w-2 h-2 rounded-full" style="background:#00ee77;box-shadow:0 0 6px #00ee77;"></span>
+        <span class="nl text-xs tracking-widest uppercase">Live System-Log — alle Events in Echtzeit</span>
+      </div>
+    </div>
+
+    <!-- Abschluss-Text -->
+    <div class="text-center mt-4">
+      <p class="text-gray-500 text-sm italic">
+        Und vieles mehr… Dies ist nur ein kurzer Einblick in die Oberfläche.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     CTA / ZUGANG
+════════════════════════════════════════════════════════════════ -->
+<section id="zugang" class="py-28 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full rglow-c"></div>
+    <div class="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full rglow-t"></div>
+  </div>
+
+  <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+
+    <!--
+      BILD: Freuen.png
+      → CTA-Sektion, über dem Button.
+      Der Ape freut sich / feiert — motiviert zum Klicken.
+    -->
+    <img src="./Bilder/Freuen.png"
+         alt="Sniperino Ape — Freude"
+         class="w-44 mx-auto mb-8 rounded-2xl float"
+         style="filter:drop-shadow(0 0 30px #ffaa0055);"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+    <div class="hidden" style="font-size:4rem;margin-bottom:2rem;">🦍</div>
+
+    <div class="inline-block px-3 py-1 rounded text-xs tracking-widest uppercase mb-5 badge-t">
+      Zugang erhalten
+    </div>
+
+    <h2 class="text-5xl md:text-6xl font-extrabold mb-5 leading-tight">
+      Aufhören, Calls<br/>
+      <span class="grad">zu verpassen.</span>
+    </h2>
+    <p class="text-gray-400 text-base mb-10 max-w-xl mx-auto leading-relaxed">
+      Du siehst den Call. Sniperino ist bereits drin.<br/>
+      Hol dir jetzt den privaten Beta-Zugang.
+    </p>
+
+    <div class="gc rounded-2xl p-8 md:p-10 max-w-lg mx-auto" style="background:#07070e;">
+
+      <div class="term rounded-xl p-4 mb-6 text-left">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="tdot" style="background:#ff5f57;"></span>
+          <span class="tdot" style="background:#febc2e;"></span>
+          <span class="tdot" style="background:#28c840;"></span>
+          <span class="text-gray-700 ml-2 text-xs">zugang_anfragen</span>
+        </div>
+        <div class="text-xs leading-[1.9]">
+          <span class="nl">$</span> <span class="text-gray-300">sniperino --request-access</span><br/>
+          <span class="text-gray-600">→ </span><span class="nc">Slot verfügbar</span>
+          <span class="blink nc"> ▮</span>
+        </div>
+      </div>
+
+      <a href="https://t.me/DEIN_TELEGRAM_HANDLE"
+         class="btn-t w-full block text-center py-4 rounded-xl font-extrabold tracking-widest uppercase text-sm mb-3">
+        📨 Zugang via Telegram anfragen
+      </a>
+      <p class="text-gray-700 text-xs tracking-wide">Limitierte Beta-Plätze &nbsp;·&nbsp; Privat &nbsp;·&nbsp; Nur für Degens</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════════ -->
+<footer style="background:#050509;border-top:1px solid #141420;" class="py-10">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
+
+      <!-- Logo -->
+      <!-- BILD: Logo.png — auch im Footer -->
+      <a href="#" class="flex items-center gap-3">
+        <img src="./Bilder/Logo.png" alt="Sniperino"
+             class="w-7 h-7 rounded object-cover"
+             style="box-shadow:0 0 10px #00ccff44;border:1px solid #00ccff33;"
+             onerror="this.style.display='none';" />
+        <span class="nc font-bold tracking-widest uppercase text-sm">Sniperino</span>
+      </a>
+
+      <div class="flex items-center gap-6 text-xs text-gray-600">
+        <a href="#wie-es-funktioniert" class="hover:text-gray-400 transition-colors">Funktionsprinzip</a>
+        <a href="#features"            class="hover:text-gray-400 transition-colors">Features</a>
+        <a href="#warum"               class="hover:text-gray-400 transition-colors">Warum Sniperino</a>
+        <a href="#zugang"              class="hover:text-gray-400 transition-colors">Zugang</a>
+      </div>
+
+      <div class="text-xs text-gray-700 text-right max-w-xs leading-relaxed">
+        Keine Finanzberatung. Krypto-Trading ist risikoreich.<br/>
+        <span class="nc" style="opacity:.35;">DYOR. WAGMI.</span>
+      </div>
+    </div>
+
+    <hr class="sep mb-5" />
+
+    <div class="text-center text-xs text-gray-700">
+      © 2025 Sniperino &nbsp;·&nbsp; Telegram-gesteuerter Pump.fun Sniper &nbsp;·&nbsp;
+      <span class="nc" style="opacity:.4;">PumpPortal WS</span> &nbsp;·&nbsp;
+      <span class="nt" style="opacity:.4;">Jupiter Ultra</span> &nbsp;·&nbsp;
+      <span class="nl" style="opacity:.4;">Raydium / PumpSwap</span>
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
