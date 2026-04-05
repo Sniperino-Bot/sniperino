@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sniperino Beta – Get It Free | No Cost During Beta</title>
+  <meta name="description" content="Sniperino is currently in beta – get the full sniper bot at no cost. Help us improve before the official launch and receive a free 1-month license." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #080810;
+      color: #c8d4e8;
+      font-family: "Courier New", Courier, monospace;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(0,204,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,204,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .nc { color: #00ccff; text-shadow: 0 0 8px #00ccffaa, 0 0 24px #00ccff44; }
+    .nm { color: #ff3355; text-shadow: 0 0 8px #ff3355aa, 0 0 24px #ff335544; }
+    .nl { color: #00ee77; text-shadow: 0 0 8px #00ee77aa, 0 0 24px #00ee7744; }
+    .nt { color: #ffaa00; text-shadow: 0 0 8px #ffaa00aa, 0 0 24px #ffaa0044; }
+    .gc { border: 1px solid #00ccff33; box-shadow: 0 0 18px #00ccff1a, inset 0 0 14px #00ccff08; }
+    .gm { border: 1px solid #ff335533; box-shadow: 0 0 18px #ff33551a, inset 0 0 14px #ff335508; }
+    .gl { border: 1px solid #00ee7733; box-shadow: 0 0 18px #00ee771a, inset 0 0 14px #00ee7708; }
+    .gt { border: 1px solid #ffaa0033; box-shadow: 0 0 18px #ffaa001a, inset 0 0 14px #ffaa0008; }
+    .grad {
+      background: linear-gradient(100deg, #00ccff 0%, #ff3355 50%, #00ee77 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .grad-cm {
+      background: linear-gradient(90deg, #00ccff, #ff3355);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .grad-price {
+      background: linear-gradient(90deg, #ffaa00, #ff3355);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .grad-freedom {
+      background: linear-gradient(90deg, #00ccff, #00ee77);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .btn-c {
+      display: inline-block; background: linear-gradient(135deg,#00ccff18,#ff335512);
+      border: 1px solid #00ccff; color: #00ccff; text-shadow: 0 0 8px #00ccffbb;
+      box-shadow: 0 0 20px #00ccff33; transition: all .25s; text-decoration: none; cursor: pointer;
+    }
+    .btn-c:hover { background: linear-gradient(135deg,#00ccff2a,#ff33551a); box-shadow: 0 0 38px #00ccff77,0 0 70px #00ccff22; transform: translateY(-2px); }
+    .btn-t {
+      display: inline-block; background: linear-gradient(135deg,#ffaa0025,#ff335518);
+      border: 1px solid #ffaa00; color: #ffaa00; text-shadow: 0 0 8px #ffaa00bb;
+      box-shadow: 0 0 20px #ffaa0044; transition: all .25s; text-decoration: none; cursor: pointer;
+    }
+    .btn-t:hover { background: linear-gradient(135deg,#ffaa003a,#ff33552a); box-shadow: 0 0 44px #ffaa0088,0 0 80px #ffaa0022; transform: translateY(-2px); }
+    .btn-l {
+      display: inline-block; background: linear-gradient(135deg,#00ee7718,#00ccff12);
+      border: 1px solid #00ee77; color: #00ee77; text-shadow: 0 0 8px #00ee77bb;
+      box-shadow: 0 0 20px #00ee7733; transition: all .25s; text-decoration: none; cursor: pointer;
+    }
+    .btn-l:hover { background: linear-gradient(135deg,#00ee7730,#00ccff20); box-shadow: 0 0 44px #00ee7777,0 0 80px #00ee7722; transform: translateY(-2px); }
+    .term { background: #07070e; border: 1px solid #00ccff22; box-shadow: 0 0 30px #00ccff12; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tdot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    nav { background: rgba(6,6,12,0.96); backdrop-filter: blur(16px); border-bottom: 1px solid #00ccff14; }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+    .float { animation: float 5s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+    .blink { animation: blink 1s step-end infinite; }
+    @keyframes pulse-ring-c { 0%{box-shadow:0 0 0 0 #00ccff44;} 70%{box-shadow:0 0 0 10px transparent;} 100%{box-shadow:0 0 0 0 transparent;} }
+    .pulse-ring-c { animation: pulse-ring-c 2s infinite; }
+    @keyframes pulse-ring-l { 0%{box-shadow:0 0 0 0 #00ee7755;} 70%{box-shadow:0 0 0 12px transparent;} 100%{box-shadow:0 0 0 0 transparent;} }
+    .pulse-ring-l { animation: pulse-ring-l 2s infinite; }
+    @keyframes glow-pulse { 0%,100%{box-shadow:0 0 20px #ffaa0044;} 50%{box-shadow:0 0 50px #ffaa0099,0 0 90px #ffaa0033;} }
+    .glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+    .fcard { background: #0d0d16; border: 1px solid #1a1a28; transition: all .3s; position: relative; overflow: hidden; }
+    .fcard::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,#00ccff,transparent); opacity:0; transition:opacity .3s; }
+    .fcard:hover::after { opacity:1; }
+    .fcard:hover { border-color:#00ccff2a; box-shadow:0 0 30px #00ccff14; transform:translateY(-4px); }
+    .rglow-c { background:radial-gradient(circle,#00ccff0a 0%,transparent 70%); }
+    .rglow-l { background:radial-gradient(circle,#00ee770d 0%,transparent 70%); }
+    .rglow-l-strong { background:radial-gradient(circle,#00ee7720 0%,transparent 65%); }
+    .rglow-t { background:radial-gradient(circle,#ffaa000a 0%,transparent 70%); }
+    .sep { border:none; border-top:1px solid #1a1a28; }
+    .badge-c { background:#00ccff0a; border:1px solid #00ccff33; color:#00ccff88; }
+    .badge-l { background:#00ee770a; border:1px solid #00ee7733; color:#00ee77; }
+    .badge-t { background:#ffaa000a; border:1px solid #ffaa0033; color:#ffaa00; }
+    .badge-m { background:#ff33550a; border:1px solid #ff335533; color:#ff3355; }
+    .step-card { background: #0d0d16; border: 1px solid #1a1a28; transition: all .3s; }
+    .step-card:hover { border-color:#00ee7733; box-shadow:0 0 20px #00ee7710; transform:translateY(-3px); }
+    .notice-box {
+      background: linear-gradient(135deg, #1a0e00, #160800);
+      border: 1px solid #ffaa0055;
+      box-shadow: 0 0 30px #ffaa0018, inset 0 0 20px #ffaa0008;
+      position: relative; overflow: hidden;
+    }
+    .notice-box::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, #ffaa00, #ff3355, #ffaa00, transparent);
+    }
+    .mobile-cta { position:fixed; bottom:0; left:0; right:0; z-index:50; background:rgba(6,6,12,0.98); border-top:1px solid #00ee7744; padding:0.75rem 1.25rem; }
+    @media (min-width:768px) { .mobile-cta { display:none; } }
+    @media (max-width: 639px) {
+      section.py-24 { padding-top: 3rem; padding-bottom: 3rem; }
+      section.py-20 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+    }
+  </style>
+</head>
+<body class="grid-bg">
+
+<!-- ═══════════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════════ -->
+<nav class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4">
+    <a href="https://sniperino-bot.github.io/sniperino/index.html" class="flex items-center gap-3 flex-shrink-0">
+      <img src="./Logo.png" alt="Sniperino"
+           class="w-9 h-9 rounded object-cover"
+           style="box-shadow:0 0 14px #00ccff55;border:1px solid #00ccff44;"
+           onerror="this.style.display='none';" />
+      <span class="nc text-lg font-extrabold tracking-widest uppercase">Sniperino</span>
+    </a>
+
+    <a href="https://sniperino-bot.github.io/sniperino/index.html" class="hidden md:inline text-xs text-gray-600 hover:text-gray-300 transition-colors">← Back to main page</a>
+
+    <a href="https://t.me/meinbotshop_bot"
+       class="btn-l px-4 md:px-6 py-2 rounded text-xs font-bold tracking-widest uppercase"
+       target="_blank" rel="noopener">
+      ✈ Get Beta →
+    </a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════ -->
+<section class="pt-32 pb-20 relative overflow-hidden" id="hero">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full rglow-l-strong"></div>
+    <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full rglow-c"></div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-block px-3 py-1 rounded text-xs tracking-widest uppercase mb-6 badge-l">🚀 Beta Access – 100% Free</div>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+          <span class="grad-freedom">Sniperino Beta –</span><br/>
+          <span class="text-gray-100">Get It Free.</span>
+        </h1>
+        <p class="text-gray-400 text-base md:text-lg mb-8 leading-relaxed max-w-xl">
+          We're currently in beta – and you can get the full bot at <span class="nl font-bold">no cost</span>. In return, we'd love your feedback to make Sniperino rock-solid before the official launch.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="https://t.me/meinbotshop_bot"
+             class="btn-l px-8 py-4 rounded-xl font-extrabold tracking-widest uppercase text-sm inline-block pulse-ring-l"
+             target="_blank" rel="noopener">
+            👉 Get Your Free Beta License
+          </a>
+          <a href="#how-to-get" class="btn-c px-6 py-4 rounded-xl font-bold tracking-widest uppercase text-xs">
+            How it works →
+          </a>
+        </div>
+      </div>
+      <div class="flex justify-center items-center">
+        <img src="./Freuen.png"
+             alt="Excited ape celebrating the free Sniperino beta"
+             class="w-64 md:w-80 float"
+             style="filter:drop-shadow(0 0 40px #00ee7733);" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     WHY BETA?
+═══════════════════════════════════════════════ -->
+<section class="py-24 relative" id="why-beta" style="background:#050509;border-top:1px solid #141420;border-bottom:1px solid #141420;">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <div class="inline-block px-3 py-1 rounded text-xs tracking-widest uppercase mb-4 badge-c">Why Beta?</div>
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-4">
+        <span class="grad-cm">Honest. Transparent.</span><br/>
+        <span class="text-gray-200">Here's the deal.</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="fcard rounded-xl p-6 text-center">
+        <div class="text-4xl mb-4">🐛</div>
+        <h3 class="nc font-bold text-sm tracking-widest uppercase mb-3">Bug Hunting</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">
+          We want to catch every edge case and bug before the official release. Real users, real conditions – that's how software gets bulletproof.
+        </p>
+      </div>
+      <div class="fcard rounded-xl p-6 text-center">
+        <div class="text-4xl mb-4">💬</div>
+        <h3 class="nl font-bold text-sm tracking-widest uppercase mb-3">Your Feedback Shapes It</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">
+          Every suggestion you send directly influences what gets built next. Beta testers aren't users – they're co-creators of the final product.
+        </p>
+      </div>
+      <div class="fcard rounded-xl p-6 text-center">
+        <div class="text-4xl mb-4">🎁</div>
+        <h3 class="nt font-bold text-sm tracking-widest uppercase mb-3">Free 1-Month License</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">
+          Early testers get a full 1-month license completely free – no strings attached, no credit card, no commitment. Just install and snipe.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     IMPORTANT NOTICE
+═══════════════════════════════════════════════ -->
+<section class="py-20 relative" id="notice">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="notice-box rounded-2xl p-8">
+      <div class="flex items-start gap-4">
+        <span class="text-3xl flex-shrink-0">⚠️</span>
+        <div>
+          <h3 class="nt font-extrabold text-base tracking-widest uppercase mb-3">Important Notice – Please Read</h3>
+          <p class="text-gray-300 text-sm leading-relaxed mb-3">
+            Your beta license is <span class="nt font-bold">valid for 1 month</span> and is tied to the beta period. Once Sniperino officially launches, beta licenses may be invalidated.
+          </p>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            After the official launch, the regular price will be <span class="text-gray-300 font-bold">30 USDC/month</span>. We'll notify all beta testers ahead of time.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     HOW TO GET YOUR BETA LICENSE
+═══════════════════════════════════════════════ -->
+<section class="py-24 relative overflow-hidden" id="how-to-get" style="background:#050509;border-top:1px solid #141420;border-bottom:1px solid #141420;">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/2 right-0 w-[500px] h-[500px] rounded-full rglow-l"></div>
+  </div>
+  <div class="max-w-4xl mx-auto px-6 relative z-10">
+    <div class="text-center mb-12">
+      <div class="inline-block px-3 py-1 rounded text-xs tracking-widest uppercase mb-4 badge-l">Step by Step</div>
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-4">
+        <span class="grad-freedom">How to Get Your</span><br/>
+        <span class="text-gray-200">Beta License</span>
+      </h2>
+      <p class="text-gray-500 text-sm max-w-md mx-auto">It takes less than 2 minutes. No payment, no account needed.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5 mb-10">
+      <div class="step-card rounded-xl p-6 flex items-start gap-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-xl"
+             style="background:#00ccff0a;border:1px solid #00ccff33;">📱</div>
+        <div>
+          <div class="nc text-xs font-bold tracking-widest uppercase mb-1">Step 1</div>
+          <p class="text-gray-300 text-sm">Open Telegram and search for <span class="nc font-bold">@meinbotshop_bot</span></p>
+        </div>
+      </div>
+
+      <div class="step-card rounded-xl p-6 flex items-start gap-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-xl"
+             style="background:#00ee770a;border:1px solid #00ee7733;">💬</div>
+        <div>
+          <div class="nl text-xs font-bold tracking-widest uppercase mb-1">Step 2</div>
+          <p class="text-gray-300 text-sm">Send the message: <span class="nl font-bold font-mono">Beta Lizenz</span></p>
+        </div>
+      </div>
+
+      <div class="step-card rounded-xl p-6 flex items-start gap-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-xl"
+             style="background:#ffaa000a;border:1px solid #ffaa0033;">🤖</div>
+        <div>
+          <div class="nt text-xs font-bold tracking-widest uppercase mb-1">Step 3</div>
+          <p class="text-gray-300 text-sm">The bot automatically sends you your <span class="nt font-bold">license key</span> + download link</p>
+        </div>
+      </div>
+
+      <div class="step-card rounded-xl p-6 flex items-start gap-4">
+        <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-xl"
+             style="background:#00ee770a;border:1px solid #00ee7733;">🚀</div>
+        <div>
+          <div class="nl text-xs font-bold tracking-widest uppercase mb-1">Step 4</div>
+          <p class="text-gray-300 text-sm">Install, set up (~15 min), and <span class="nl font-bold">start sniping</span>!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal preview -->
+    <div class="term rounded-xl p-5 mb-10 text-xs">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="tdot" style="background:#ff5f57;"></span>
+        <span class="tdot" style="background:#febc2e;"></span>
+        <span class="tdot" style="background:#28c840;"></span>
+        <span class="text-gray-700 ml-2 text-xs">@meinbotshop_bot</span>
+      </div>
+      <div class="leading-[1.9]">
+        <span class="text-gray-600">You: </span><span class="nl">Beta Lizenz</span><br/>
+        <span class="text-gray-600">Bot: </span><span class="nc">✓ Beta license confirmed! Here is your key:</span><br/>
+        <span class="text-gray-600 ml-5">Key: </span><span class="nt font-bold">SNPR-BETA-XXXX-XXXX</span><br/>
+        <span class="text-gray-600 ml-5">Download: </span><span class="nc">→ sniperino_v1.x_beta.zip</span><br/>
+        <span class="nl">✓ Welcome to the beta. Happy sniping!</span><span class="blink nc"> ▮</span>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <a href="https://t.me/meinbotshop_bot"
+         class="btn-l px-10 py-5 rounded-xl font-extrabold tracking-widest uppercase text-base inline-block pulse-ring-l"
+         target="_blank" rel="noopener"
+         style="font-size:1rem;letter-spacing:.12em;">
+        👉 Open @meinbotshop_bot on Telegram
+      </a>
+      <p class="text-gray-700 text-xs mt-4 tracking-wide">100% free &nbsp;·&nbsp; No payment &nbsp;·&nbsp; Instant delivery</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FEEDBACK
+═══════════════════════════════════════════════ -->
+<section class="py-24 relative" id="feedback">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="flex justify-center">
+        <img src="./denkt%20nach.png"
+             alt="Thoughtful ape considering feedback for Sniperino"
+             class="w-56 md:w-72 float"
+             style="filter:drop-shadow(0 0 30px #00ccff22);" />
+      </div>
+      <div>
+        <div class="inline-block px-3 py-1 rounded text-xs tracking-widest uppercase mb-4 badge-c">Feedback</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold mb-4">
+          <span class="nc">Found a bug?</span><br/>
+          <span class="text-gray-200">Got a suggestion?</span>
+        </h2>
+        <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-6">
+          Found a bug? Report it directly on X (Twitter): <a href="https://x.com/sniperino_bot" class="nc font-bold hover:underline" target="_blank" rel="noopener">@sniperino_bot</a>. Every piece of feedback counts and helps us build the <span class="nl font-bold">best sniper bot on Solana</span>.
+        </p>
+        <div class="gl rounded-xl p-5" style="background:#07100d;">
+          <div class="space-y-3 text-sm">
+            <div class="flex items-center gap-3">
+              <span class="nl font-bold">✓</span>
+              <span class="text-gray-300">Report bugs directly on X (Twitter)</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="nl font-bold">✓</span>
+              <span class="text-gray-300">Suggest features you'd love to see</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="nl font-bold">✓</span>
+              <span class="text-gray-300">Tell us what's working great too</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="nl font-bold">✓</span>
+              <span class="text-gray-300">Every message gets read by the dev team</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CTA – BOTTOM
+═══════════════════════════════════════════════ -->
+<section class="py-24 relative overflow-hidden" id="cta" style="background:#050509;border-top:1px solid #141420;">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full rglow-l-strong"></div>
+  </div>
+  <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+    <div class="flex justify-center mb-8">
+      <img src="./Aha%20Moment.png"
+           alt="Ape having an aha moment – ready to join the Sniperino beta"
+           class="w-48 md:w-60 float"
+           style="filter:drop-shadow(0 0 40px #00ee7733);" />
+    </div>
+
+    <div class="inline-block px-3 py-1 rounded text-xs tracking-widest uppercase mb-4 badge-l">Limited Beta</div>
+    <h2 class="text-3xl md:text-5xl font-extrabold mb-4">
+      <span class="grad-freedom">Join the beta.</span>
+    </h2>
+    <p class="text-gray-400 text-base md:text-lg mb-3 max-w-xl mx-auto">
+      It's free. It's limited. Don't miss it.
+    </p>
+    <p class="text-gray-600 text-sm mb-10">
+      Spots are not unlimited. Once the beta closes, access requires a paid license.
+    </p>
+
+    <div class="gc rounded-2xl p-8 md:p-10" style="background:#07070e;">
+      <a href="https://t.me/meinbotshop_bot"
+         class="btn-l w-full block text-center py-5 rounded-xl font-extrabold tracking-widest uppercase mb-5 pulse-ring-l"
+         style="font-size:1rem;letter-spacing:.12em;"
+         target="_blank" rel="noopener">
+        👉 Open @meinbotshop_bot on Telegram
+      </a>
+      <div class="grid grid-cols-3 gap-3 text-center">
+        <div>
+          <div class="nl text-xs font-bold mb-1">✓ Free</div>
+          <div class="text-gray-700 text-xs">No payment</div>
+        </div>
+        <div>
+          <div class="nc text-xs font-bold mb-1">✓ Instant</div>
+          <div class="text-gray-700 text-xs">Automatic delivery</div>
+        </div>
+        <div>
+          <div class="nt text-xs font-bold mb-1">✓ Full Access</div>
+          <div class="text-gray-700 text-xs">All features</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════ -->
+<footer style="background:#050509;border-top:1px solid #141420;" class="py-10">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
+      <a href="https://sniperino-bot.github.io/sniperino/index.html" class="flex items-center gap-3">
+        <img src="./Logo.png" alt="Sniperino"
+             class="w-7 h-7 rounded object-cover"
+             style="box-shadow:0 0 10px #00ccff44;border:1px solid #00ccff33;"
+             onerror="this.style.display:'none';" />
+        <span class="nc font-bold tracking-widest uppercase text-sm">Sniperino</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-xs text-gray-600">
+        <a href="https://sniperino-bot.github.io/sniperino/index.html#vorteile"            class="hover:text-gray-400 transition-colors">Advantages</a>
+        <a href="https://sniperino-bot.github.io/sniperino/index.html#wie-es-funktioniert" class="hover:text-gray-400 transition-colors">How it works</a>
+        <a href="https://sniperino-bot.github.io/sniperino/index.html#features"            class="hover:text-gray-400 transition-colors">Features</a>
+        <a href="https://sniperino-bot.github.io/sniperino/index.html#faq"                 class="hover:text-gray-400 transition-colors">FAQ</a>
+        <a href="./impressum.html"                    class="hover:text-gray-400 transition-colors">Impressum</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="https://t.me/meinbotshop_bot"
+           class="w-8 h-8 rounded flex items-center justify-center text-sm transition-all hover:scale-110"
+           style="background:#00ccff0a;border:1px solid #00ccff22;" title="Telegram"
+           target="_blank" rel="noopener">
+          <span class="nc">✈</span>
+        </a>
+        <a href="https://x.com/sniperino_bot"
+           class="btn-c px-4 py-2 rounded text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all hover:scale-105"
+           target="_blank" rel="noopener" title="Follow us on X">
+          <span style="font-size:1rem;">𝕏</span> Follow us on X
+        </a>
+      </div>
+    </div>
+    <hr class="sep mb-5" />
+    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="text-xs text-gray-700">
+        © 2026 Sniperino &nbsp;·&nbsp; Pump.fun Sniper Bot &nbsp;·&nbsp;
+        <span class="nc" style="opacity:.35;">PumpPortal WS</span> &nbsp;·&nbsp;
+        <span class="nt" style="opacity:.35;">Jupiter Ultra</span> &nbsp;·&nbsp;
+        <span class="nl" style="opacity:.35;">Raydium / PumpSwap</span>
+      </div>
+      <div class="text-xs text-gray-700">
+        No financial advice. Crypto trading is risky. &nbsp;<span class="nc" style="opacity:.25;">DYOR. WAGMI.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     MOBILE STICKY CTA
+═══════════════════════════════════════════════ -->
+<div class="mobile-cta">
+  <a href="https://t.me/meinbotshop_bot"
+     class="btn-l w-full block text-center py-3 rounded-xl font-bold tracking-widest uppercase text-xs"
+     target="_blank" rel="noopener">
+    👉 Get Free Beta License on Telegram
+  </a>
+</div>
+
+</body>
+</html>
