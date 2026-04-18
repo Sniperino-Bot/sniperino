@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sniperino kaufen — Lizenz erwerben</title>
+<meta name="description" content="Sniperino Lizenz kaufen. 0,3 SOL bezahlen, TX-ID an den Telegram-Bot senden und License Key mit Download-Link erhalten — automatisch, in wenigen Minuten.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep:      oklch(8% 0.009 258);
+  --bg-base:      oklch(11% 0.009 258);
+  --bg-raised:    oklch(14% 0.01 258);
+  --bg-high:      oklch(17% 0.012 258);
+  --text-1:       oklch(92% 0.007 258);
+  --text-2:       oklch(62% 0.009 258);
+  --text-3:       oklch(42% 0.008 258);
+  --amber:        oklch(76% 0.155 75);
+  --amber-dim:    oklch(62% 0.13 75);
+  --amber-deep:   oklch(48% 0.10 75);
+  --amber-faint:  oklch(76% 0.155 75 / 0.08);
+  --amber-glow:   oklch(76% 0.155 75 / 0.15);
+  --green:        oklch(72% 0.16 145);
+  --red:          oklch(62% 0.17 25);
+  --border:       oklch(20% 0.01 258);
+  --border-2:     oklch(27% 0.012 258);
+  --sp1: 4px; --sp2: 8px; --sp3: 12px; --sp4: 16px;
+  --sp5: 24px; --sp6: 32px; --sp7: 48px; --sp8: 64px; --sp9: 96px;
+  --font-d: 'Chakra Petch', sans-serif;
+  --font-b: 'Epilogue', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-deep);
+  color: var(--text-1);
+  font-family: var(--font-b);
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+.wrap {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--sp5);
+}
+
+/* ── SKIP LINK ── */
+.skip-link {
+  position: absolute; top: -100%; left: var(--sp4); z-index: 999;
+  background: var(--amber); color: var(--bg-deep);
+  padding: var(--sp2) var(--sp5);
+  font-family: var(--font-d); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+  transition: top .15s ease;
+}
+.skip-link:focus { top: var(--sp3); outline: none; }
+
+/* ── FOCUS VISIBLE ── */
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible,
+.btn-nav:focus-visible,
+.btn-cta:focus-visible { outline-offset: 5px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--sp3) var(--sp5);
+  background: oklch(8% 0.009 258 / 0.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-d); font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-1); text-decoration: none;
+  display: flex; align-items: center; gap: var(--sp2);
+}
+.nav-links { display: flex; align-items: center; gap: var(--sp6); list-style: none; }
+.nav-links a {
+  font-family: var(--font-d); font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-2); text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--text-1); }
+.btn-nav {
+  font-family: var(--font-d); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--bg-deep); background: var(--amber);
+  border: none; padding: var(--sp2) var(--sp5);
+  cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; gap: var(--sp2);
+  transition: background .2s, transform .15s;
+  clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.btn-nav:hover { background: oklch(82% 0.155 75); transform: translateY(-1px); }
+.nav-hamburger {
+  display: none; background: none; border: 1px solid var(--border-2);
+  color: var(--text-2); cursor: pointer; padding: 6px;
+  width: 36px; height: 36px; align-items: center; justify-content: center;
+}
+
+/* ── LANG SWITCH ── */
+.lang-switch {
+  display: flex; align-items: center; gap: 3px;
+  font-family: var(--font-d); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.lang-btn {
+  color: var(--text-3); text-decoration: none;
+  padding: 4px 9px; transition: color .2s, background .2s, border-color .2s;
+  border: 1px solid transparent; border-radius: 2px;
+  display: flex; align-items: center; gap: 4px;
+}
+.lang-btn:hover { color: var(--text-1); border-color: var(--border-2); }
+.lang-active {
+  color: var(--amber) !important;
+  background: var(--amber-faint);
+  border-color: oklch(76% 0.155 75 / 0.25) !important;
+}
+.lang-sep { color: var(--border-2); padding: 0 1px; }
+
+/* ── SECTION SHARED ── */
+.sec-label {
+  display: flex; align-items: center; gap: var(--sp3);
+  margin-bottom: var(--sp4);
+}
+.sec-label::before { content:''; width:20px; height:1px; background: var(--amber-dim); }
+.sec-label span {
+  font-family: var(--font-d); font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber-dim);
+}
+.sec-hl {
+  font-family: var(--font-d);
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: -0.01em; line-height: 1.0;
+  margin-bottom: var(--sp3);
+}
+
+/* ── PAGE HERO ── */
+.page-hero {
+  padding-top: 140px; padding-bottom: var(--sp9);
+  background: var(--bg-deep); position: relative; overflow: hidden;
+}
+.page-hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 70% at 50% 0%, oklch(48% 0.10 75 / 0.06), transparent 65%);
+}
+.page-hero-inner { position: relative; z-index: 1; max-width: 720px; }
+.page-eyebrow {
+  display: flex; align-items: center; gap: var(--sp3);
+  margin-bottom: var(--sp5);
+}
+.page-eyebrow span {
+  font-family: var(--font-d); font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-dim);
+}
+.page-hl {
+  font-family: var(--font-d);
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-weight: 700; line-height: 0.92;
+  letter-spacing: -0.025em; text-transform: uppercase;
+  margin-bottom: var(--sp5);
+}
+.page-hl em { color: var(--amber); font-style: italic; }
+.page-sub {
+  font-size: 1rem; color: var(--text-2); font-weight: 300;
+  line-height: 1.75; max-width: 54ch;
+}
+
+/* ── PRICING CARD ── */
+#pricing { background: var(--bg-base); padding: var(--sp9) 0; }
+.pricing-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--sp8); align-items: start;
+}
+.pricing-card {
+  background: var(--bg-deep);
+  border: 1px solid var(--border-2);
+  padding: var(--sp7) var(--sp6);
+  position: relative; overflow: hidden;
+}
+.pricing-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--amber);
+}
+.price-tag {
+  display: inline-flex; align-items: center; gap: var(--sp2);
+  background: var(--amber-faint);
+  border: 1px solid oklch(76% 0.155 75 / 0.18);
+  padding: 3px var(--sp3); margin-bottom: var(--sp5);
+}
+.price-tag span {
+  font-family: var(--font-d); font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--amber);
+}
+.price-amount {
+  font-family: var(--font-d);
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  font-weight: 700; color: var(--amber);
+  line-height: 1; letter-spacing: -0.03em;
+  margin-bottom: var(--sp2);
+}
+.price-unit {
+  font-family: var(--font-d); font-size: 0.78rem; font-weight: 600;
+  color: var(--amber-dim); letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: var(--sp5);
+}
+.price-name {
+  font-family: var(--font-d); font-size: 1.1rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  margin-bottom: var(--sp3);
+}
+.price-desc {
+  font-size: 0.86rem; color: var(--text-2); font-weight: 300;
+  line-height: 1.65; margin-bottom: var(--sp6);
+}
+.price-features { list-style: none; display: flex; flex-direction: column; gap: var(--sp3); margin-bottom: var(--sp6); }
+.price-features li {
+  display: flex; align-items: flex-start; gap: var(--sp3);
+  font-size: 0.84rem; color: var(--text-2); font-weight: 300;
+}
+.price-features li::before {
+  content: '✓'; color: var(--green);
+  font-family: var(--font-d); font-size: 0.72rem;
+  flex-shrink: 0; margin-top: 2px;
+}
+.btn-buy {
+  font-family: var(--font-d); font-size: 0.88rem; font-weight: 700;
+  letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--bg-deep); background: var(--amber);
+  border: none; padding: var(--sp3) var(--sp7);
+  cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; gap: var(--sp2);
+  width: 100%; justify-content: center;
+  transition: background .2s, transform .15s;
+  clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+}
+.btn-buy:hover { background: oklch(82% 0.155 75); transform: translateY(-2px); }
+
+.pricing-notes {
+  display: flex; flex-direction: column; gap: var(--sp5);
+  padding: var(--sp5) 0;
+}
+.pricing-note {
+  display: flex; gap: var(--sp4); align-items: flex-start;
+  padding: var(--sp4) 0; border-bottom: 1px solid var(--border);
+}
+.pricing-note:last-child { border-bottom: none; }
+.note-icon {
+  flex-shrink: 0; width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border-2); background: var(--bg-high); margin-top: 2px;
+}
+.note-title {
+  font-family: var(--font-d); font-size: 0.8rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-1);
+  margin-bottom: var(--sp1);
+}
+.note-body { font-size: 0.82rem; color: var(--text-2); font-weight: 300; line-height: 1.6; }
+
+/* ── PAYMENT STEPS ── */
+#steps { background: var(--bg-deep); padding: var(--sp9) 0; }
+.steps-layout {
+  display: grid; grid-template-columns: 1fr 1.1fr;
+  gap: var(--sp8); align-items: start; margin-top: var(--sp7);
+}
+.payment-steps { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+.payment-step {
+  background: var(--bg-deep); padding: var(--sp5) var(--sp6);
+  display: flex; gap: var(--sp5); align-items: flex-start;
+  transition: background .2s;
+}
+.payment-step:hover { background: var(--bg-base); }
+.step-num-badge {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  border: 1px solid var(--amber-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-d); font-size: 0.72rem; font-weight: 700;
+  color: var(--amber); letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+.step-content-title {
+  font-family: var(--font-d); font-size: 0.84rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-1);
+  margin-bottom: var(--sp2);
+}
+.step-content-body {
+  font-size: 0.82rem; color: var(--text-2); font-weight: 300; line-height: 1.6;
+}
+
+/* ── WALLET ADDRESS FIELD ── */
+.wallet-block {
+  background: var(--bg-raised); border: 1px solid var(--border-2);
+  padding: var(--sp5) var(--sp5); margin-bottom: var(--sp5);
+}
+.wallet-label {
+  font-family: var(--font-d); font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-dim);
+  margin-bottom: var(--sp3);
+}
+.wallet-row {
+  display: flex; align-items: center; gap: var(--sp3);
+}
+.wallet-addr {
+  font-family: 'Courier New', monospace; font-size: 0.78rem;
+  color: var(--text-1); flex: 1;
+  word-break: break-all; line-height: 1.5;
+  background: var(--bg-high); border: 1px solid var(--border);
+  padding: var(--sp3) var(--sp4);
+  user-select: all;
+}
+.btn-copy {
+  font-family: var(--font-d); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--amber); background: var(--amber-faint);
+  border: 1px solid oklch(76% 0.155 75 / 0.25);
+  padding: var(--sp2) var(--sp4); cursor: pointer;
+  transition: background .2s, color .2s; flex-shrink: 0;
+  white-space: nowrap;
+}
+.btn-copy:hover { background: oklch(76% 0.155 75 / 0.15); }
+.btn-copy.copied { color: var(--green); border-color: oklch(72% 0.16 145 / 0.4); background: oklch(72% 0.16 145 / 0.08); }
+
+/* ── TELEGRAM BLOCK ── */
+.tg-block {
+  background: var(--bg-raised); border: 1px solid var(--border-2);
+  padding: var(--sp5); margin-bottom: var(--sp5);
+  display: flex; align-items: center; gap: var(--sp4);
+  text-decoration: none; transition: background .2s, border-color .2s;
+}
+.tg-block:hover { background: var(--bg-high); border-color: oklch(62% 0.16 235 / 0.4); }
+.tg-icon {
+  flex-shrink: 0; width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid oklch(62% 0.16 235 / 0.3);
+  background: oklch(62% 0.16 235 / 0.08);
+}
+.tg-block-inner { flex: 1; }
+.tg-label {
+  font-family: var(--font-d); font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3);
+  margin-bottom: var(--sp1);
+}
+.tg-handle {
+  font-family: var(--font-d); font-size: 0.92rem; font-weight: 700;
+  color: oklch(72% 0.16 235); letter-spacing: 0.02em;
+}
+.tg-arrow { color: var(--text-3); flex-shrink: 0; }
+
+/* ── MESSAGE FORMAT ── */
+.msg-block {
+  background: var(--bg-raised); border: 1px solid var(--border-2);
+  overflow: hidden;
+}
+.msg-block-head {
+  background: var(--bg-high); padding: var(--sp2) var(--sp4);
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.msg-block-head span {
+  font-family: var(--font-d); font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3);
+}
+.msg-code {
+  font-family: 'Courier New', monospace; font-size: 0.82rem;
+  color: var(--text-1); padding: var(--sp4) var(--sp5);
+  line-height: 1.6; user-select: all;
+}
+.msg-code .tx-ph { color: var(--amber); }
+.msg-code .em-ph { color: oklch(72% 0.16 235); }
+.msg-note {
+  font-size: 0.78rem; color: var(--text-3); font-weight: 300;
+  padding: 0 var(--sp5) var(--sp4);
+  line-height: 1.6;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: .08s; }
+.d2 { transition-delay: .16s; }
+.d3 { transition-delay: .24s; }
+.d4 { transition-delay: .32s; }
+.d5 { transition-delay: .40s; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg-deep); border-top: 1px solid var(--border);
+  padding: var(--sp7) 0 var(--sp5);
+}
+.footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: var(--sp7); }
+.footer-brand p { font-size: 0.82rem; color: var(--text-3); margin-top: var(--sp3); max-width: 36ch; line-height: 1.65; font-weight: 300; }
+.footer-col h5 {
+  font-family: var(--font-d); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-2);
+  margin-bottom: var(--sp4);
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: var(--sp2); }
+.footer-col ul li a { font-size: 0.82rem; color: var(--text-3); text-decoration: none; font-weight: 300; transition: color .2s; }
+.footer-col ul li a:hover { color: var(--text-2); }
+.footer-bottom {
+  margin-top: var(--sp6); padding-top: var(--sp5); border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp4); flex-wrap: wrap;
+}
+.footer-bottom p { font-size: 0.7rem; color: var(--text-3); font-weight: 300; }
+.footer-sol {
+  display: flex; align-items: center; gap: var(--sp2);
+  font-family: var(--font-d); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-dim);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .pricing-layout { grid-template-columns: 1fr; }
+  .steps-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: fixed; top: 53px; left: 0; right: 0;
+    background: var(--bg-deep); border-bottom: 1px solid var(--border);
+    padding: var(--sp5); gap: var(--sp4);
+  }
+  .nav-hamburger { display: flex; }
+  .footer-top { grid-template-columns: 1fr; }
+  .lang-switch .lang-btn { padding: 4px 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity:1; transform:none; transition:none; }
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
+
+<!-- ═══ NAV ═══ -->
+<nav aria-label="Hauptnavigation">
+  <a href="index.html" class="nav-logo">
+    <img src="Logo.png" alt="" aria-hidden="true" style="height:36px;width:auto;border-radius:3px;">
+    Sniperino
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html#how">So funktioniert's</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="index.html#speed">Performance</a></li>
+    <li><a href="index.html#security">Sicherheit</a></li>
+    <li><a href="index.html#integrations">Integrationen</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:var(--sp3)">
+    <div class="lang-switch">
+      <a href="get.html" class="lang-btn lang-active" aria-current="page">🇩🇪 Deutsch</a>
+      <span class="lang-sep">|</span>
+      <a href="geten.html" class="lang-btn">🇬🇧 English</a>
+    </div>
+    <a href="get.html" class="btn-nav">Sniperino kaufen</a>
+    <button class="nav-hamburger" id="nav-toggle" aria-label="Menü umschalten" aria-expanded="false" aria-controls="nav-links">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <line x1="1" y1="4" x2="15" y2="4" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="1" y1="9" x2="15" y2="9" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="1" y1="14" x2="15" y2="14" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<main id="main-content">
+
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero">
+  <div class="page-hero-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">
+        <span>Sniperino kaufen</span>
+      </div>
+      <h1 class="page-hl">
+        Einmal zahlen.<br>
+        <em>30 Tage</em>.<br>
+        Fertig.
+      </h1>
+      <p class="page-sub">0,3 SOL bezahlen, TX-ID an den Telegram-Bot senden und License Key mit Download-Link erhalten — automatisch, in wenigen Minuten.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PREISE ═══ -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="pricing-layout">
+
+      <!-- Pricing card -->
+      <div class="pricing-card reveal">
+        <div class="price-tag"><span>Lizenz</span></div>
+        <div class="price-amount">0,3</div>
+        <div class="price-unit">SOL / 30 Tage</div>
+        <div class="price-name">Sniperino — 1-Monats-Lizenz</div>
+        <p class="price-desc">Eine einmalige Zahlung. Kein Abo, keine automatische Verlängerung, keine versteckten Kosten. Nach 30 Tagen kaufst du einfach erneut — wenn du willst.</p>
+        <ul class="price-features">
+          <li>Voller Zugang zu Sniperino für 30 Tage</li>
+          <li>HWID-gebundener License Key — ein Gerät pro Schlüssel</li>
+          <li>Eigenständige Windows-EXE — kein Python, kein Setup</li>
+          <li>Unbegrenzte Telegram-Kanäle mit eigenen Regeln</li>
+          <li>Alle Funktionen: Auto-Sell, Stop-Loss, Trailing Stop, Live-Chart</li>
+          <li>Lizenz wird per Telegram-Bot zugestellt — in wenigen Minuten</li>
+        </ul>
+        <a href="https://t.me/meinbotshop_bot" class="btn-buy" target="_blank" rel="noopener noreferrer">
+          Jetzt kaufen — 0,3 SOL
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5"/><polyline points="7,2 11,6 7,10" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        </a>
+      </div>
+
+      <!-- Notes -->
+      <div class="pricing-notes reveal d2">
+        <div class="pricing-note">
+          <div class="note-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="oklch(76% 0.155 75 / 0.7)" stroke-width="1">
+              <circle cx="7" cy="7" r="5.5"/>
+              <polyline points="4.5,7 6.5,9 9.5,5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="note-title">Kein Abo</div>
+            <div class="note-body">Eine einfache Einmalzahlung. Nichts verlängert sich automatisch. Du entscheidest, wann und ob du den nächsten Monat kaufst.</div>
+          </div>
+        </div>
+        <div class="pricing-note">
+          <div class="note-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="oklch(76% 0.155 75 / 0.7)" stroke-width="1">
+              <rect x="2" y="5" width="10" height="8" rx="0.5"/>
+              <path d="M4 5V3.5a3 3 0 0 1 6 0V5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="note-title">HWID-gebunden an dein Gerät</div>
+            <div class="note-body">Dein License Key ist an deinen Hardware-Fingerabdruck gebunden. Er kann nicht gleichzeitig auf einem anderen Gerät laufen — und ist nicht übertragbar oder weiterverkäuflich.</div>
+          </div>
+        </div>
+        <div class="pricing-note">
+          <div class="note-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="oklch(76% 0.155 75 / 0.7)" stroke-width="1">
+              <circle cx="7" cy="7" r="5.5"/>
+              <line x1="7" y1="4" x2="7" y2="7.5"/>
+              <line x1="7" y1="9.5" x2="7" y2="10.5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="note-title">Sofortige Lieferung per Bot</div>
+            <div class="note-body">Der Telegram-Bot prüft deine Zahlung automatisch on-chain. Keine manuelle Prüfung, keine Warteschlange. License Key und Download-Link kommen als direkte Antwort.</div>
+          </div>
+        </div>
+        <div class="pricing-note">
+          <div class="note-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="oklch(76% 0.155 75 / 0.7)" stroke-width="1">
+              <polyline points="2,4 7,1 12,4 12,10 7,13 2,10 2,4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="note-title">Nur Solana-Zahlung</div>
+            <div class="note-body">Zahlung erfolgt on-chain über Solana — schnell, transparent und nachvollziehbar. Keine Überweisungen, keine Kreditkarten, keine Drittanbieter-Zahlungsdienste.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ZAHLUNGSSCHRITTE ═══ -->
+<section id="steps">
+  <div class="wrap">
+    <div class="sec-label reveal"><span>Ablauf</span></div>
+    <h2 class="sec-hl reveal d1">Sechs Schritte.<br>In wenigen Minuten erledigt.</h2>
+
+    <div class="steps-layout">
+
+      <!-- Steps list -->
+      <div class="payment-steps reveal d2">
+
+        <div class="payment-step">
+          <div class="step-num-badge">01</div>
+          <div>
+            <div class="step-content-title">0,3 SOL senden</div>
+            <div class="step-content-body">Sende genau <strong style="color:var(--amber)">0,3 SOL</strong> an die Wallet-Adresse auf dieser Seite. Überprüfe die Adresse vor der Bestätigung sorgfältig — Blockchain-Transaktionen sind nicht umkehrbar.</div>
+          </div>
+        </div>
+
+        <div class="payment-step">
+          <div class="step-num-badge">02</div>
+          <div>
+            <div class="step-content-title">Transaktions-Hash kopieren</div>
+            <div class="step-content-body">Nachdem die Transaktion bestätigt wurde, kopiere die <strong style="color:var(--text-1)">TX-ID (Transaktions-Hash)</strong> aus deiner Wallet. Sie sieht aus wie eine lange Zeichenfolge aus Buchstaben und Zahlen.</div>
+          </div>
+        </div>
+
+        <div class="payment-step">
+          <div class="step-num-badge">03</div>
+          <div>
+            <div class="step-content-title">Telegram-Bot öffnen</div>
+            <div class="step-content-body">Öffne Telegram und suche nach <strong style="color:oklch(72% 0.16 235)">@meinbotshop_bot</strong>. Dies ist der einzige offizielle Bot für die Sniperino-Lizenzzustellung. Sende deine Zahlungsdaten nirgendwo sonst hin.</div>
+          </div>
+        </div>
+
+        <div class="payment-step">
+          <div class="step-num-badge">04</div>
+          <div>
+            <div class="step-content-title">Nachricht senden</div>
+            <div class="step-content-body">Sende dem Bot eine einzige Nachricht in genau diesem Format — ersetze die Platzhalter durch deine tatsächliche TX-ID und E-Mail-Adresse.</div>
+          </div>
+        </div>
+
+        <div class="payment-step">
+          <div class="step-num-badge">05</div>
+          <div>
+            <div class="step-content-title">Automatische Verifizierung</div>
+            <div class="step-content-body">Der Bot prüft die Solana-Blockchain automatisch auf deine Transaktion. Keine manuelle Prüfung nötig. Das dauert in der Regel weniger als eine Minute.</div>
+          </div>
+        </div>
+
+        <div class="payment-step">
+          <div class="step-num-badge">06</div>
+          <div>
+            <div class="step-content-title">Lizenz erhalten</div>
+            <div class="step-content-body">Der Bot antwortet mit deinem <strong style="color:var(--amber)">License Key</strong> und einem direkten <strong style="color:var(--text-1)">Download-Link</strong> für die Sniperino-EXE. Installieren, Schlüssel eingeben, lossnipen.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right column: wallet + bot + message format -->
+      <div class="reveal d3" style="display:flex;flex-direction:column;gap:var(--sp5)">
+
+        <!-- Wallet address -->
+        <div class="wallet-block">
+          <div class="wallet-label">0,3 SOL an diese Adresse senden</div>
+          <div class="wallet-row">
+            <div class="wallet-addr" id="wallet-addr">5q983oe9H1caSqfN8f9cygmfzfJLY3iCJwv7JgA1GN8e</div>
+            <button class="btn-copy" id="copy-wallet" onclick="copyWallet()">Kopieren</button>
+          </div>
+        </div>
+
+        <!-- Telegram bot -->
+        <a href="https://t.me/meinbotshop_bot" class="tg-block" target="_blank" rel="noopener noreferrer">
+          <div class="tg-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <circle cx="11" cy="11" r="10" stroke="oklch(72% 0.16 235 / 0.5)" stroke-width="0.75"/>
+              <path d="M4 10.5l12-5-4.5 12-2-4.5L4 10.5z" stroke="oklch(72% 0.16 235)" stroke-width="0.9" fill="oklch(62% 0.16 235 / 0.15)"/>
+              <line x1="9.5" y1="13" x2="8" y2="17" stroke="oklch(72% 0.16 235)" stroke-width="0.9"/>
+            </svg>
+          </div>
+          <div class="tg-block-inner">
+            <div class="tg-label">Schritt 3 — In Telegram öffnen</div>
+            <div class="tg-handle">@meinbotshop_bot</div>
+          </div>
+          <div class="tg-arrow">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="1" y1="8" x2="13" y2="8" stroke="currentColor" stroke-width="1.5"/><polyline points="9,4 13,8 9,12" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+          </div>
+        </a>
+
+        <!-- Message format -->
+        <div class="msg-block">
+          <div class="msg-block-head">
+            <span>Schritt 4 — Nachrichtenformat</span>
+            <button class="btn-copy" id="copy-msg" onclick="copyMsg()" style="margin:0">Kopieren</button>
+          </div>
+          <div class="msg-code">TX: <span class="tx-ph">[dein_transaktions_hash]</span> Email: <span class="em-ph">[deine@email.com]</span></div>
+          <p class="msg-note">Ersetze <code style="color:var(--amber);font-size:.8em">[dein_transaktions_hash]</code> durch die TX-ID aus deiner Wallet und <code style="color:oklch(72% 0.16 235);font-size:.8em">[deine@email.com]</code> durch deine E-Mail-Adresse. Sende alles als eine einzige Nachricht — ohne Zeilenumbrüche.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="display:inline-flex;margin-bottom:var(--sp1)">
+          <img src="Logo.png" alt="" aria-hidden="true" loading="lazy" style="height:34px;width:auto;border-radius:3px;">
+          Sniperino
+        </a>
+        <p>Automatisiertes Solana Token Sniping. Vom Telegram-Signal zur On-Chain-Ausführung — vollständig ohne Handeingriff. Gebaut für Degens, die wissen, dass Latenz Alpha ist.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Produkt</h5>
+        <ul>
+          <li><a href="index.html#how">So funktioniert's</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#speed">Performance</a></li>
+          <li><a href="index.html#security">Sicherheit</a></li>
+          <li><a href="index.html#gui">Benutzeroberfläche</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Zugang</h5>
+        <ul>
+          <li><a href="get.html">Sniperino kaufen</a></li>
+          <li><a href="https://t.me/meinbotshop_bot" target="_blank" rel="noopener noreferrer">Telegram-Bot</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Sniperino. Alle Rechte vorbehalten. HWID-gebundene Distribution. Keine Anlageberatung.</p>
+      <div class="footer-sol">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <circle cx="6" cy="6" r="5.5" stroke="oklch(62% 0.13 75)" stroke-width="0.75"/>
+          <circle cx="6" cy="6" r="2" stroke="oklch(62% 0.13 75)" stroke-width="0.75"/>
+          <line x1="6" y1="0.5" x2="6" y2="4" stroke="oklch(62% 0.13 75)" stroke-width="0.75"/>
+          <line x1="6" y1="8" x2="6" y2="11.5" stroke="oklch(62% 0.13 75)" stroke-width="0.75"/>
+          <line x1="0.5" y1="6" x2="4" y2="6" stroke="oklch(62% 0.13 75)" stroke-width="0.75"/>
+          <line x1="8" y1="6" x2="11.5" y2="6" stroke="oklch(62% 0.13 75)" stroke-width="0.75"/>
+        </svg>
+        Gebaut auf Solana
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Scroll Reveal ──
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => revealObs.observe(el));
+
+// ── Mobile Nav ──
+const toggle = document.getElementById('nav-toggle');
+const navLinks = document.getElementById('nav-links');
+toggle.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// ── Nav scroll shadow ──
+const navEl = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  navEl.style.boxShadow = window.scrollY > 40 ? '0 4px 24px oklch(4% 0.01 258 / 0.5)' : 'none';
+}, { passive: true });
+
+// ── Copy wallet address ──
+function copyWallet() {
+  const addr = '5q983oe9H1caSqfN8f9cygmfzfJLY3iCJwv7JgA1GN8e';
+  const btn = document.getElementById('copy-wallet');
+  navigator.clipboard.writeText(addr).then(() => {
+    btn.textContent = 'Kopiert!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Kopieren'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── Copy message format ──
+function copyMsg() {
+  const msg = 'TX: [dein_transaktions_hash] Email: [deine@email.com]';
+  const btn = document.getElementById('copy-msg');
+  navigator.clipboard.writeText(msg).then(() => {
+    btn.textContent = 'Kopiert!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Kopieren'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
